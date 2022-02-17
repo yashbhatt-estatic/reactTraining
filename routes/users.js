@@ -16,6 +16,10 @@ router.put('/save', function(req, res, next) {
 
 router.delete('/delete', function(req, res, next) {
     res.send("You called the user delete method.");
-})
+});
+
+router.get('/:id', function(req, res, next) {
+    res.send("You called the user details method.");
+});
 
 module.exports = router;
