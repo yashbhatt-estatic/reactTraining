@@ -3,7 +3,19 @@ var router = express.Router();
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+    res.send("You called the user listing method.");
 });
+
+router.post('/add', function(req, res, next) {
+    res.send("You called the user add method.");
+});
+
+router.put('/save', function(req, res, next) {
+    res.send("You called the user edit method.");
+});
+
+router.delete('/delete', function(req, res, next) {
+    res.send("You called the user delete method.");
+})
 
 module.exports = router;
