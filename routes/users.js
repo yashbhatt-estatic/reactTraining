@@ -235,7 +235,7 @@ router.post('/login', async function(req, res, next) {
 
     } catch (err) {
         let msg;
-        user.username ? (msg = "username") : (msg = "email");
+        user.username ? (msg = "invalid username") : (msg = "invalid email");
         return res.status(500).json({
             success: false,
             error: true,
