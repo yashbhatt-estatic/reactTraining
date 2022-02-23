@@ -234,19 +234,13 @@ router.post('/login', async function(req, res, next) {
 
 
     } catch (err) {
-        if (user.username) {
-            return res.status(500).json({
-                success: false,
-                error: true,
-                msg: "Please check username."
-            });
-        } else {
-            return res.status(500).json({
-                success: false,
-                error: true,
-                msg: "Please check email."
-            });
-        }
+        let msg;
+        user.username ? (msg = "username") : (msg = "email");
+        return res.status(500).json({
+            success: false,
+            error: true,
+            msg
+        });
     }
 
 });
