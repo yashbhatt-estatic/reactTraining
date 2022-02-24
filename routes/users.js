@@ -27,9 +27,9 @@ async function getUserAll() {
     return new Promise((resolve, reject) => {
         con.query("Select first_name, last_name, email, username, password, phone_number, company from users where is_delete = (?)", [0], function(err, result) {
             if (err) {
-                reject(err);
+                return reject(err);
             }
-            resolve(result);
+            return resolve(result);
         });
     });
 }
@@ -61,9 +61,9 @@ async function createUser(user) {
         con.query("Insert into users (first_name, last_name, email, username, password, phone_number, company) values ( ? , ? , ? , ? , ? ,? , ?)", [user.first_name, user.last_name, user.email, user.username, user.password, user.phone_number, user.company], function(err, result) {
 
             if (err) {
-                reject(err);
+                return reject(err);
             }
-            resolve(result);
+            return resolve(result);
         });
     });
 }
@@ -95,9 +95,9 @@ async function updateUser(user, id) {
     return new Promise((resolve, reject) => {
         con.query("Update users set first_name = ?, last_name = ? where  id = ?", [user.first_name, user.last_name, id], function(err, result) {
             if (err) {
-                reject(err);
+                return reject(err);
             }
-            resolve(result);
+            return resolve(result);
         });
     });
 }
@@ -127,9 +127,9 @@ async function softDelete(id) {
     return new Promise((resolve, reject) => {
         con.query("Update users set is_delete = ? where id = ?", [1, id], function(err, result) {
             if (err) {
-                reject(err);
+                return reject(err);
             }
-            resolve(result);
+            return resolve(result);
         });
     });
 }
@@ -158,9 +158,9 @@ async function hardDelete(id) {
     return new Promise((resolve, reject) => {
         con.query("Delete from users where id = ?", [id], function(err, result) {
             if (err) {
-                reject(err);
+                return reject(err);
             }
-            resolve(result);
+            return resolve(result);
         });
     });
 }
@@ -193,9 +193,9 @@ async function hashPassword(password) {
     return new Promise((resolve, reject) => {
         bcrypt.hash(password, saltRounds, function(error, hash) {
             if (error) {
-                reject(error);
+                return reject(error);
             }
-            resolve(hash);
+            return resolve(hash);
         });
     });
 }
@@ -204,9 +204,9 @@ async function registerUser(user) {
     return new Promise((resolve, reject) => {
         con.query("Insert into users (first_name, last_name, email, username, password, phone_number, company) values ( ? , ? , ? , ? , ? ,? , ?)", [user.first_name, user.last_name, user.email, user.username, user.password, user.phone_number, user.company], function(err, result) {
             if (err) {
-                reject(err);
+                return reject(err);
             }
-            resolve(result);
+            return resolve(result);
         });
     });
 }
@@ -249,9 +249,9 @@ async function loginUser(user) {
     return new Promise((resolve, reject) => {
         con.query("Select username,email,password from users where username = ? OR email = ?", [user.username, user.email], function(err, result) {
             if (err) {
-                reject(err);
+                return reject(err);
             }
-            resolve(result);
+            return resolve(result);
         });
     });
 }
@@ -260,9 +260,9 @@ async function hashCompare(fetchedPassword, password) {
     return new Promise((resolve, reject) => {
         bcrypt.compare(fetchedPassword, password, function(error, response) {
             if (error) {
-                reject(error);
+                return reject(error);
             }
-            resolve(response);
+            return resolve(response);
         });
     });
 }
