@@ -5,7 +5,8 @@ const saltRounds = 10;
 var jwt = require('jsonwebtoken');
 var authentication = require('../middleware/authentication');
 const multer = require('multer');
-
+const { sequelize } = require('../models');
+var userController = require('./../controllers/user.controller');
 
 const storage = multer.diskStorage({
     destination: function(req, file, cb) {
@@ -18,8 +19,6 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage });
-
-
 
 /* GET users listing. */
 router.get('/', authentication, async function(req, res, next) {
