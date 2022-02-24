@@ -2,9 +2,27 @@ var express = require('express');
 var router = express.Router();
 const bcrypt = require('bcryptjs');
 const saltRounds = 10;
+var jwt = require('jsonwebtoken');
+var authentication = require('../middleware/authentication');
+const multer = require('multer');
+
+
+const storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, './uploads');
+    },
+    filename: function(req, file, cb) {
+        const filename = Date.now();
+        cb(null, filename + '-' + file.originalname);
+    }
+});
+
+const upload = multer({ storage: storage });
+
+
 
 /* GET users listing. */
-router.get('/', async function(req, res, next) {
+router.get('/', authentication, async function(req, res, next) {
     try {
         const result = await getUserAll();
         return res.status(200).json({
@@ -34,10 +52,11 @@ async function getUserAll() {
     });
 }
 
-router.post('/create', async function(req, res, next) {
+router.post('/create', authentication, upload.any('upload_file'), async function(req, res, next) {
 
     try {
         var user = req.body;
+        user.profile_pic = req.files[0].path;
         const result = await createUser(user);
         return res.status(200).json({
             success: true,
@@ -58,7 +77,7 @@ router.post('/create', async function(req, res, next) {
 
 async function createUser(user) {
     return new Promise((resolve, reject) => {
-        con.query("Insert into users (first_name, last_name, email, username, password, phone_number, company) values ( ? , ? , ? , ? , ? ,? , ?)", [user.first_name, user.last_name, user.email, user.username, user.password, user.phone_number, user.company], function(err, result) {
+        con.query("Insert into users (first_name, last_name, email, username, password, profile_pic, phone_number, company) values ( ? , ? , ? , ? , ? , ? ,? , ?)", [user.first_name, user.last_name, user.email, user.username, user.password, user.profile_pic, user.phone_number, user.company], function(err, result) {
 
             if (err) {
                 return reject(err);
@@ -68,12 +87,13 @@ async function createUser(user) {
     });
 }
 
-router.put('/update/:id', async function(req, res, next) {
+router.put('/update/:id', authentication, upload.any('upload_file'), async function(req, res, next) {
 
     try {
         var id = req.params.id;
         var user = req.body;
-        const result = await updateUser(user, id);
+        profile_pic = req.files[0].path;
+        const result = await updateUser(user, profile_pic, id);
         return res.status(200).json({
             success: true,
             error: false,
@@ -91,18 +111,19 @@ router.put('/update/:id', async function(req, res, next) {
 
 });
 
-async function updateUser(user, id) {
+async function updateUser(user, profile_pic, id) {
     return new Promise((resolve, reject) => {
-        con.query("Update users set first_name = ?, last_name = ? where  id = ?", [user.first_name, user.last_name, id], function(err, result) {
+        con.query("Update users set first_name = ?, last_name = ?, profile_pic = ? where  id = ?", [user.first_name, user.last_name, profile_pic, id], function(err, result) {
             if (err) {
-                return reject(err);
+                reject(err);
             }
-            return resolve(result);
+            resolve(result);
         });
     });
 }
 
-router.put('/soft/:id', async function(req, res, next) {
+
+router.put('/soft/:id', authentication, async function(req, res, next) {
     try {
         var id = req.params.id;
         const result = await softDelete(id);
@@ -134,7 +155,7 @@ async function softDelete(id) {
     });
 }
 
-router.delete('/delete/:id', async function(req, res, next) {
+router.delete('/delete/:id', authentication, async function(req, res, next) {
     try {
         var id = req.params.id;
         const result = await hardDelete(id);
@@ -165,12 +186,13 @@ async function hardDelete(id) {
     });
 }
 
-router.post('/register', async function(req, res, next) {
+router.post('/register', upload.any('upload_file'), async function(req, res, next) {
 
     try {
         var user = req.body;
         const hash = await hashPassword(user.password);
         user.password = hash;
+        user.profile_pic = req.files[0].path;
         const result = await registerUser(user);
         return res.status(200).json({
             success: true,
@@ -202,7 +224,7 @@ async function hashPassword(password) {
 
 async function registerUser(user) {
     return new Promise((resolve, reject) => {
-        con.query("Insert into users (first_name, last_name, email, username, password, phone_number, company) values ( ? , ? , ? , ? , ? ,? , ?)", [user.first_name, user.last_name, user.email, user.username, user.password, user.phone_number, user.company], function(err, result) {
+        con.query("Insert into users (first_name, last_name, email, username, password, profile_pic, phone_number, company) values ( ? , ? , ? , ? , ? , ? ,? , ?)", [user.first_name, user.last_name, user.email, user.username, user.password, user.profile_pic, user.phone_number, user.company], function(err, result) {
             if (err) {
                 return reject(err);
             }
@@ -218,9 +240,13 @@ router.post('/login', async function(req, res, next) {
         const finalResult = await hashCompare(user.password, login[0].password);
 
         if (finalResult) {
+            var token = jwt.sign({ username: user.username }, 'secret');
+            console.log(token);
+
             return res.status(200).json({
                 success: true,
                 error: false,
+                token,
                 data: login,
                 msg: "User logged in successfully."
             });
