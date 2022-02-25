@@ -45,25 +45,30 @@ const getUser = async() => {
 const loginUser = async function(req, res, next) {
     console.log(req.body);
     var user = req.body;
-    return new Promise((resolve, reject) => {
+    return await new Promise((resolve, reject) => {
         models.users.findOne({
             attributes: ['first_name', 'last_name', 'email', 'username', 'password', 'phone_number', 'company'],
             where: { email: req.body.email }
         }).then((result) => {
-            console.log(result);
-            let flag = bcrypt.compareSync(user.password, result.password);
+            if (result) {
+                console.log("result");
 
-            if (flag) {
-                var token = jwt.sign({ username: user.username }, 'secret');
-                return resolve({ result, token });
+                let flag = bcrypt.compareSync(user.password, result.password);
+                console.log(flag);
 
+                if (flag == true) {
+                    var token = jwt.sign({ username: user.username }, 'secret');
+                    return resolve({ result, token });
+
+                } else {
+                    console.log("password");
+                    return resolve({ msg: "Sorry! Your Password is incorrect", result });
+                }
             } else {
-                return resolve({
-                    result
-                })
+                return resolve({ msg: "Please enter correct email", result });
             }
         }).catch((err) => {
-            return reject({ err });
+            return reject(err);
         })
     })
 }

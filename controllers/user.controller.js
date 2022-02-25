@@ -38,20 +38,22 @@ const createUser = async(req, res) => {
 }
 
 const loginUser = async(req, res) => {
-    const { err, result, token } = await userServices.loginUser(req);
-    if (err) {
-        return res.status(500).json({
-            success: false,
-            error: true,
-            msg: "Please check credential."
+    const { err, result, token, msg } = await userServices.loginUser(req);
+    console.log(result);
+    if (token) {
+
+        return res.status(200).json({
+            success: true,
+            error: false,
+            data: result,
+            token: token,
+            msg: "User logged in successfully."
         });
     }
-    return res.status(200).json({
-        success: true,
-        error: false,
-        data: result,
-        token: token,
-        msg: "User logged in successfully."
+    return res.status(500).json({
+        success: false,
+        error: true,
+        msg
     });
 
 }
