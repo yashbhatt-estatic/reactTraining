@@ -2,7 +2,6 @@ var jwt = require('jsonwebtoken');
 
 function checkJwtAuthentication(req, res, next) {
     if (req.headers && req.headers.authorization) {
-        console.log(req.headers.authorization);
         jwt.verify(req.headers.authorization, 'secret', function(err, decoded) {
             if (err) {
                 return res.status(401).json({
@@ -12,7 +11,6 @@ function checkJwtAuthentication(req, res, next) {
                     msg: "Failed to authenticate token."
                 });
             }
-            console.log(decoded, "Decoded");
             return next();
 
         });
