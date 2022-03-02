@@ -1,22 +1,25 @@
 var userServices = require('../services/user.services');
+var userAuthController = require('./user.auth.controller');
 
 const getUser = async(req, res) => {
-    const result = await userServices.getUser();
-    if (result) {
-        return res.status(200).json({
-            success: true,
-            error: false,
-            data: result,
-            msg: "User data fetched successfully."
+    try {
+        const result = await userServices.getUser();
+        if (result) {
+            return res.status(200).json({
+                success: true,
+                error: false,
+                data: result,
+                msg: "User data fetched successfully."
+            });
+        }
+    } catch (err) {
+        return res.status(500).json({
+            success: false,
+            error: true,
+            data: err,
+            msg: "Error while getting user."
         });
     }
-    return res.status(500).json({
-        success: false,
-        error: true,
-        data: err,
-        msg: "Error while getting user."
-    });
-
 }
 
 const createUser = async(req, res) => {
@@ -29,7 +32,6 @@ const createUser = async(req, res) => {
             msg: "Data Registered successfully."
         });
     } catch (err) {
-
         return res.status(500).json({
             success: false,
             error: true,
@@ -41,40 +43,45 @@ const createUser = async(req, res) => {
 }
 
 const loginUser = async(req, res) => {
-    // try {
-    //     // const user = getUserByEmail(req.body.email)
-    //     // const check = checkPassword(req.body.password, user.password)
-    //     if (check) {
-    //         const token = tokenization(user.username)
-    //     }
-    //     return res.status(500).send('Invalid email or password')
+    try {
+        const user = await userServices.loginUser(req.body.email);
+        const check = await userAuthController.checkPassword(req.body.password, user.password);
+        if (check) {
+            const token = await userAuthController.tokenization(user.username, user.password);
+            return res.status(200).json({
+                success: true,
+                error: false,
+                data: user,
+                token: token,
+                msg: "User logged in successfully."
+            });
+        } else {
+            return res.status(500).json({
+                success: false,
+                error: true,
+                msg: 'Invalid email or password'
+            });
+        }
+    } catch (err) {
+        return res.status(500).json({
+            success: false,
+            error: true,
+            data: err,
+            msg: "Error while logging user."
+        });
+    }
+}
 
-    // } catch(err) {
-
-    // }
-    const { err, result, token, msg } = await userServices.loginUser(req);
-    console.log(result);
-    if (token) {
-
+const updateUser = async(req, res) => {
+    try {
+        const result = await userServices.updateUser(req);
         return res.status(200).json({
             success: true,
             error: false,
             data: result,
-            token: token,
-            msg: "User logged in successfully."
+            msg: "User Updated successfully."
         });
-    }
-    return res.status(500).json({
-        success: false,
-        error: true,
-        msg
-    });
-
-}
-
-const updateUser = async(req, res) => {
-    const { err, result } = await userServices.updateUser(req);
-    if (err) {
+    } catch (err) {
         return res.status(500).json({
             success: false,
             error: true,
@@ -82,17 +89,18 @@ const updateUser = async(req, res) => {
             msg: "Error while updating user."
         });
     }
-    return res.status(200).json({
-        success: true,
-        error: false,
-        data: result,
-        msg: "User Updated successfully."
-    });
 }
 
 const softDelete = async(req, res) => {
-    const { err, result } = await userServices.softDelete(req);
-    if (err) {
+    try {
+        const result = await userServices.softDelete(req.params.id);
+        return res.status(200).json({
+            success: true,
+            error: false,
+            data: result,
+            msg: "User Deleted successfully."
+        });
+    } catch (err) {
         return res.status(500).json({
             success: false,
             error: true,
@@ -100,18 +108,18 @@ const softDelete = async(req, res) => {
             msg: "Error while deleting user."
         });
     }
-    return res.status(200).json({
-        success: true,
-        error: false,
-        data: result,
-        msg: "User Deleted successfully."
-    });
-
 }
 
 const deleteUser = async(req, res) => {
-    const { err, result } = await userServices.deleteUser(req);
-    if (err) {
+    try {
+        const result = await userServices.deleteUser(req.params.id);
+        return res.status(200).json({
+            success: true,
+            error: false,
+            data: result,
+            msg: "User Deleted successfully."
+        });
+    } catch (err) {
         return res.status(500).json({
             success: false,
             error: true,
@@ -119,12 +127,6 @@ const deleteUser = async(req, res) => {
             msg: "Error while deleting user."
         });
     }
-    return res.status(200).json({
-        success: true,
-        error: false,
-        data: result,
-        msg: "User Deleted successfully."
-    });
 }
 
 module.exports = {

@@ -1,11 +1,8 @@
-const bcrypt = require('bcryptjs');
-var jwt = require('jsonwebtoken');
-const saltRounds = 10;
+var userAuthController = require('../controllers/user.auth.controller');
 
-const createUser = async(req, res, next) => {
+const createUser = async(req) => {
     var user = req.body;
-    const hashPass = bcrypt.hashSync(user.password, saltRounds);
-    console.log(hashPass);
+    const hashPass = userAuthController.hashPassword(user.password);
     var profile_pic = req.files[0].path;
     return new Promise((resolve, reject) => {
         models.users.create({
@@ -20,10 +17,10 @@ const createUser = async(req, res, next) => {
 
         }).then((result) => {
             console.log(result);
-            resolve({ result });
+            resolve(result);
         }).catch((err) => {
             console.log(err);
-            reject({ err });
+            reject(err);
         })
     })
 }
@@ -42,38 +39,20 @@ const getUser = async() => {
     })
 }
 
-const loginUser = async function(req, res, next) {
-    console.log(req.body);
-    var user = req.body;
+const loginUser = async function(email) {
     return await new Promise((resolve, reject) => {
         models.users.findOne({
             attributes: ['first_name', 'last_name', 'email', 'username', 'password', 'phone_number', 'company'],
-            where: { email: req.body.email }
+            where: { email }
         }).then((result) => {
-            if (result) {
-                console.log("result");
-
-                let flag = bcrypt.compareSync(user.password, result.password);
-                console.log(flag);
-
-                if (flag == true) {
-                    var token = jwt.sign({ username: user.username }, 'secret');
-                    return resolve({ result, token });
-
-                } else {
-                    console.log("password");
-                    return resolve({ msg: "Sorry! Your Password is incorrect", result });
-                }
-            } else {
-                return resolve({ msg: "Please enter correct email", result });
-            }
+            return resolve(result);
         }).catch((err) => {
             return reject(err);
         })
     })
 }
 
-const updateUser = async(req, res, next) => {
+const updateUser = async(req) => {
     return new Promise((resolve, reject) => {
         var id = req.params.id;
         var user = req.body;
@@ -87,16 +66,15 @@ const updateUser = async(req, res, next) => {
                 id
             }
         }).then((result) => {
-            resolve({ result });
+            return resolve(result);
         }).catch((err) => {
-            reject({ err });
+            return reject(err);
         })
     })
 }
 
-const softDelete = async(req, res, next) => {
+const softDelete = async(id) => {
     return new Promise((resolve, reject) => {
-        var id = req.params.id;
         models.users.update({
             is_delete: 1
         }, {
@@ -111,9 +89,8 @@ const softDelete = async(req, res, next) => {
     })
 }
 
-const deleteUser = async(req, res, next) => {
+const deleteUser = async(id) => {
     return new Promise((resolve, reject) => {
-        var id = req.params.id;
         models.users.destroy({
             where: {
                 id
