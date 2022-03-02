@@ -20,8 +20,16 @@ const getUser = async(req, res) => {
 }
 
 const createUser = async(req, res) => {
-    const { err, result } = await userServices.createUser(req);
-    if (err) {
+    try {
+        const result = await userServices.createUser(req);
+        return res.status(200).json({
+            success: true,
+            error: false,
+            data: result,
+            msg: "Data Registered successfully."
+        });
+    } catch (err) {
+
         return res.status(500).json({
             success: false,
             error: true,
@@ -29,15 +37,21 @@ const createUser = async(req, res) => {
             msg: "Error while register user."
         });
     }
-    return res.status(200).json({
-        success: true,
-        error: false,
-        data: result,
-        msg: "Data Registered successfully."
-    });
+
 }
 
 const loginUser = async(req, res) => {
+    // try {
+    //     // const user = getUserByEmail(req.body.email)
+    //     // const check = checkPassword(req.body.password, user.password)
+    //     if (check) {
+    //         const token = tokenization(user.username)
+    //     }
+    //     return res.status(500).send('Invalid email or password')
+
+    // } catch(err) {
+
+    // }
     const { err, result, token, msg } = await userServices.loginUser(req);
     console.log(result);
     if (token) {
