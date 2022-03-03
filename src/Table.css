@@ -1,0 +1,17 @@
+h1{
+    text-align: center;
+}
+
+.Table {
+    margin-top: 3%;
+    text-align: center;
+    width: 70%;
+    margin: 0 auto;
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+
+.Table-Td {
+    padding: 10px;
+    border: black 1px solid;
+}
