@@ -7,7 +7,6 @@ h1{
     text-align: center;
     width: 70%;
     margin: 0 auto;
-    table-layout: fixed;
     border-collapse: collapse;
 }
 

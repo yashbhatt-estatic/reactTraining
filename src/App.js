@@ -1,11 +1,11 @@
 import React, {Component} from 'react'
-import Table from './components/parent/table/Table'
+import Apps from './components/App'
 
 class App extends Component {
   render() {
     return (
       <div className="container">
-        <Table></Table>
+        <Apps></Apps>
       </div>
     )
   }
