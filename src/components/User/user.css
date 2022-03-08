@@ -14,3 +14,14 @@ h1{
     padding: 10px;
     border: black 1px solid;
 }
+
+button {
+    background-color:lightcoral;
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-decoration: none;
+    margin: 4px 2px;
+    cursor: pointer;
+  }
+  
