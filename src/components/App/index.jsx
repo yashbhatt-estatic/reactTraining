@@ -31,7 +31,16 @@ class App extends PureComponent {
     this.setState({ firstName: "" });
   }
 
-  handler(id) {
+  handler(id) { 
+
+    const elements = document.getElementsByClassName("activeClass"); 
+    for (var i = 0; i < elements.length; i++) {
+      elements[i].classList.remove('activeClass')
+    }
+
+    const element = document.getElementById(id);
+    element.className = "activeClass";
+
     var data = Obj.filter(function (item) {
       return item.id === id;
     }).map(function ({ firstName }) {

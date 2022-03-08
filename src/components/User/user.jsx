@@ -8,7 +8,7 @@ class User extends Component {
       <>
         {this.props.userObj.map((Obj) => {
           return (
-            <tr>
+            <tr key={Obj.id} id={Obj.id}>
               <td className="Table-Td">{Obj.id}</td>
               <td className="Table-Td">{Obj.firstName}</td>
               <td className="Table-Td">{Obj.lastName}</td>
@@ -17,9 +17,7 @@ class User extends Component {
               <td className="Table-Td">{Obj.city}</td>
               <td className="Table-Td">{Obj.state}</td>
               <td className="Table-Td">
-                <div onClick={() => this.props.handler(Obj.id)}>
-                  <button>Show</button>
-                </div>
+                  <button onClick={() => this.props.handler(Obj.id)}>Show</button>
               </td>
             </tr>
           );
