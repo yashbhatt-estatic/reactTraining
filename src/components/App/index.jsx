@@ -19,7 +19,7 @@ class App extends PureComponent {
   componentDidUpdate(prevState, snapshot) {
 
     if (snapshot !== null && this.state.firstName !== "Admin") {
-      alert(' Name Changed \n previous user : '+ snapshot.firstName + '\n Changed to : ' + this.state.firstName)
+      alert(' User Changed \n previous user : '+ snapshot.firstName + '\n Changed to : ' + this.state.firstName)
     }
   }
 
