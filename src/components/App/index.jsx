@@ -12,14 +12,18 @@ class App extends PureComponent {
     this.setState({ firstName: "Admin" });
   }
 
-  getSnapshotBeforeUpdate( prevState) {
+  getSnapshotBeforeUpdate(prevState) {
     return prevState;
   }
 
   componentDidUpdate(prevState, snapshot) {
-
     if (snapshot !== null && this.state.firstName !== "Admin") {
-      alert(' User Changed \n previous user : '+ snapshot.firstName + '\n Changed to : ' + this.state.firstName)
+      alert(
+        " User Changed \n previous user : " +
+          snapshot.firstName +
+          "\n Changed to : " +
+          this.state.firstName
+      );
     }
   }
 
@@ -36,7 +40,7 @@ class App extends PureComponent {
 
     this.setState({ firstName: data[0] });
   }
-  
+
   render() {
     return (
       <>
