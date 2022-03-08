@@ -1,7 +1,7 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import User from "../User/user";
 import Obj from "../User/userObj";
-class App extends Component {
+class App extends PureComponent {
   constructor(props) {
     super(props);
     this.state = { firstName: "" };
@@ -12,20 +12,19 @@ class App extends Component {
     this.setState({ firstName: "Admin" });
   }
 
-  componentWillUnmount() {
-    this.setState({ firstName: "" });
-  }
-
   getSnapshotBeforeUpdate( prevState) {
-    
     return prevState;
   }
 
   componentDidUpdate(prevState, snapshot) {
 
-    if (snapshot.firstName !== this.state.firstName) {
-      alert(' Name Changed \n prev Name: '+ snapshot.firstName + '\n Changed to : ' + this.state.firstName)
+    if (snapshot !== null && this.state.firstName !== "Admin") {
+      alert(' Name Changed \n previous user : '+ snapshot.firstName + '\n Changed to : ' + this.state.firstName)
     }
+  }
+
+  componentWillUnmount() {
+    this.setState({ firstName: "" });
   }
 
   handler(id) {
