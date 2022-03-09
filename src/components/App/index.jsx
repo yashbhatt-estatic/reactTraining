@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React, { Component } from "react";
 import User from "../User/user";
 import Obj from "../User/assets/userObj";
 class App extends PureComponent {
@@ -48,12 +48,13 @@ class App extends PureComponent {
     this.setState({ firstName: data[0] });
   }
 
+class App extends Component {
   render() {
     return (
       <>
-        <h1>Welcome to the page {this.state.firstName}</h1>
+        <h2>This is Parent class</h2>
         <h1>Table Data</h1>
-        <table>
+        <table className="Table">
           <thead>
             <tr>
               <th>Id</th>
@@ -63,7 +64,6 @@ class App extends PureComponent {
               <th>User Name</th>
               <th>City</th>
               <th>State</th>
-              <th>Button</th>
             </tr>
           </thead>
           <tbody>
