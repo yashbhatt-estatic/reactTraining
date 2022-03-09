@@ -31,13 +31,11 @@ class App extends PureComponent {
     this.setState({ firstName: "" });
   }
 
-  handler(id) { 
-
-    const elements = document.getElementsByClassName("activeClass"); 
+  handler(id) {
+    const elements = document.getElementsByClassName("activeClass");
     for (var i = 0; i < elements.length; i++) {
-      elements[i].classList.remove('activeClass')
+      elements[i].classList.remove("activeClass");
     }
-
     const element = document.getElementById(id);
     element.className = "activeClass";
 
@@ -69,7 +67,7 @@ class App extends PureComponent {
             </tr>
           </thead>
           <tbody>
-            <User userObj={Obj} handler={this.handler}/>
+            <User userObj={Obj} handler={this.handler} />
           </tbody>
         </table>
       </>
