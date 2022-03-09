@@ -10,9 +10,12 @@
 
 # production
 /build
+<<<<<<< HEAD
 /built-lambda
 
 /.netlify
+=======
+>>>>>>> 8ed2cb8 (🎉 init commit)
 
 # misc
 .DS_Store

@@ -1,14 +1,14 @@
-import React, { PureComponent } from 'react';
-import Apps from './components/App';
+import React, {Component} from 'react'
+import Apps from './components/App'
 
-class App extends PureComponent {
+class App extends Component {
   render() {
     return (
-      <div className="bg-dark text-white">
-        <Apps />
+      <div className="container">
+        <Apps/>
       </div>
-    );
+    )
   }
 }
 
-export default App;
+export default App
