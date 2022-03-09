@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import User from "../User/user";
 import Obj from "../User/assets/userObj";
 class App extends PureComponent {
@@ -31,11 +31,13 @@ class App extends PureComponent {
     this.setState({ firstName: "" });
   }
 
-  handler(id) {
-    const elements = document.getElementsByClassName("activeClass");
+  handler(id) { 
+
+    const elements = document.getElementsByClassName("activeClass"); 
     for (var i = 0; i < elements.length; i++) {
-      elements[i].classList.remove("activeClass");
+      elements[i].classList.remove('activeClass')
     }
+
     const element = document.getElementById(id);
     element.className = "activeClass";
 
@@ -48,13 +50,12 @@ class App extends PureComponent {
     this.setState({ firstName: data[0] });
   }
 
-class App extends Component {
   render() {
     return (
       <>
-        <h2>This is Parent class</h2>
+        <h1>Welcome to the page {this.state.firstName}</h1>
         <h1>Table Data</h1>
-        <table className="Table">
+        <table>
           <thead>
             <tr>
               <th>Id</th>
@@ -64,10 +65,11 @@ class App extends Component {
               <th>User Name</th>
               <th>City</th>
               <th>State</th>
+              <th>Button</th>
             </tr>
           </thead>
           <tbody>
-            <User userObj={Obj} handler={this.handler} />
+            <User userObj={Obj} handler={this.handler}/>
           </tbody>
         </table>
       </>
