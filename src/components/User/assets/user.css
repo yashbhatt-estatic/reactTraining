@@ -2,7 +2,7 @@ h1{
     text-align: center;
 }
 
-.Table {
+table {
     margin-top: 3%;
     text-align: center;
     width: 70%;
@@ -10,7 +10,7 @@ h1{
     border-collapse: collapse;
 }
 
-.Table-Td {
+td, th {
     padding: 10px;
     border: black 1px solid;
 }

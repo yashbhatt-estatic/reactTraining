@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
 import User from "../User/user";
-import Obj from "../User/userObj";
+import Obj from "../User/assets/userObj";
 class App extends PureComponent {
   constructor(props) {
     super(props);
@@ -55,21 +55,21 @@ class App extends PureComponent {
       <>
         <h1>Welcome to the page {this.state.firstName}</h1>
         <h1>Table Data</h1>
-        <table className="Table">
+        <table>
           <thead>
             <tr>
-              <th className="Table-Td">Id</th>
-              <th className="Table-Td">First Name</th>
-              <th className="Table-Td">Last Name</th>
-              <th className="Table-Td">Email</th>
-              <th className="Table-Td">User Name</th>
-              <th className="Table-Td">City</th>
-              <th className="Table-Td">State</th>
-              <th className="Table-Td">Button</th>
+              <th>Id</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Email</th>
+              <th>User Name</th>
+              <th>City</th>
+              <th>State</th>
+              <th>Button</th>
             </tr>
           </thead>
           <tbody>
-            <User userObj={Obj} handler={this.handler}></User>
+            <User userObj={Obj} handler={this.handler}/>
           </tbody>
         </table>
       </>

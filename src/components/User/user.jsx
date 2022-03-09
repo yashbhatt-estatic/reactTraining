@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./user.css";
+import "./assets/user.css";
 
 class User extends Component {
   
@@ -9,14 +9,14 @@ class User extends Component {
         {this.props.userObj.map((Obj) => {
           return (
             <tr key={Obj.id} id={Obj.id}>
-              <td className="Table-Td">{Obj.id}</td>
-              <td className="Table-Td">{Obj.firstName}</td>
-              <td className="Table-Td">{Obj.lastName}</td>
-              <td className="Table-Td">{Obj.email}</td>
-              <td className="Table-Td">{Obj.userName}</td>
-              <td className="Table-Td">{Obj.city}</td>
-              <td className="Table-Td">{Obj.state}</td>
-              <td className="Table-Td">
+              <td>{Obj.id}</td>
+              <td>{Obj.firstName}</td>
+              <td>{Obj.lastName}</td>
+              <td>{Obj.email}</td>
+              <td>{Obj.userName}</td>
+              <td>{Obj.city}</td>
+              <td>{Obj.state}</td>
+              <td>
                   <button onClick={() => this.props.handler(Obj.id)}>Show</button>
               </td>
             </tr>
