@@ -8,7 +8,7 @@ class App extends Component {
       <>
         <h2>This is Parent class</h2>
         <h1>Table Data</h1>
-        <table>
+        <table className="Table">
           <thead>
             <tr>
               <th>Id</th>
