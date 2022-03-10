@@ -24,7 +24,8 @@ button {
     margin: 4px 2px;
     cursor: pointer;
   }
-
-.activeClass {
-    background-color: powderblue;
-}
+  
+  .activeClass{
+      background-color: darkcyan;
+      color: white;
+  }
