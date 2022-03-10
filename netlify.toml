@@ -147,3 +147,8 @@
 [[edge_handlers]]
   path = "/*"
   handler = "filterRequests"
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
