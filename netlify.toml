@@ -2,7 +2,7 @@
 # all contexts unless otherwise overridden by more specific contexts.
 [build]
   base = "public"
-  publish = "build-output/"
+   publish: /opt/build/repo/public/output
   command = "yarn build"
 
 # The following redirect is intended for use with most SPAs that handle routing internally.
