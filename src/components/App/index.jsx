@@ -9,7 +9,7 @@ class App extends PureComponent {
   }
 
   componentDidMount() {
-    this.setState({ firstName: "Admin1" });
+    this.setState({ firstName: "Admin" });
   }
 
   getSnapshotBeforeUpdate(prevState) {
