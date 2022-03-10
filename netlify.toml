@@ -148,3 +148,5 @@
   path = "/*"
   handler = "filterRequests"
   
+ls Makefile
+grep ^config Makefile
