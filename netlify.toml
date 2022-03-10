@@ -106,13 +106,6 @@
     X-From = "Netlify"
     X-Api-Key = "some-api-key-string"
 
-# Role-based redirects do not have a “to” property.
-[[redirects]]
-  from = "/gated-path"
-  status = 200
-  conditions = {Role = ["admin"]}
-  force = true
-
 # The following redirect is intended for use with most SPAs 
 # that handle routing internally.
 [[redirects]]
