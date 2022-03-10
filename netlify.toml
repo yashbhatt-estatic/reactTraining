@@ -1,6 +1,15 @@
 # Settings in the [build] context are global and are applied to 
 # all contexts unless otherwise overridden by more specific contexts.
 [build]
+  base = "client"
+  publish = "build"
+  command = "yarn build"
+
+# The following redirect is intended for use with most SPAs that handle routing internally.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
   # Directory to change to before starting a build.
   # This is where we will look for package.json/.nvmrc/etc.
   # If not set, defaults to the root directory.
@@ -102,12 +111,6 @@
     X-From = "Netlify"
     X-Api-Key = "some-api-key-string"
 
-# Role-based redirects do not have a “to” property.
-[[redirects]]
-  from = "/gated-path"
-  status = 200
-  conditions = {Role = ["admin"]}
-  force = true
 
 # The following redirect is intended for use with most SPAs 
 # that handle routing internally.
@@ -147,8 +150,3 @@
 [[edge_handlers]]
   path = "/*"
   handler = "filterRequests"
-
-[[redirects]]
-  from = "/api/*"
-  to = "/.netlify/functions/:splat"
-  status = 200
