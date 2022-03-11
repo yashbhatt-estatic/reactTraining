@@ -1,11 +1,33 @@
+import { Button, Card, Col, Container, ListGroup, ListGroupItem, Row } from "react-bootstrap";
 import React, { Component } from "react";
 import "./assets/user.css";
 
 class User extends Component {
   constructor(props) {
     super(props);
-    this.state = { users: [], detailsLoaded: false };
+    this.state = {
+      users: [],
+      fetchUser: [],
+      detailsLoaded: false,
+    };
     this.getUser = this.getUser.bind(this);
+    this.handler = this.handler.bind(this);
+  }
+
+  handler(id) {
+    const users = this.state.users;
+
+    var data = users.data
+      .filter(function (item) {
+        return item.id === id;
+      })
+      .map(function (user) {
+        return user;
+      });
+
+    this.setState({
+      fetchUser: data
+    });
   }
 
   componentDidMount() {
@@ -13,7 +35,7 @@ class User extends Component {
   }
 
   getUser() {
-    fetch("https://61f28d022219930017f50701.mockapi.io/user")
+    fetch("https://reqres.in/api/users?page=2")
       .then((response) => response.json())
       .then((data) => {
         this.setState({
@@ -24,33 +46,65 @@ class User extends Component {
   }
 
   render() {
-    const { users, detailsLoaded } = this.state;
-    console.log(users, detailsLoaded);
+    const { users, detailsLoaded, fetchUser } = this.state;
+
     return (
       <>
-        {detailsLoaded === false ? (
-          <tr>
-            <td colSpan="99">No Data Available</td>
-          </tr>
-        ) : (
-          users.map((Obj) => {
-            return (
-              <tr key={Obj.id} id={Obj.id}>
-                <td>{Obj.id}</td>
-                <td>{Obj.first_name}</td>
-                <td>{Obj.last_name}</td>
-                <td>{Obj.email}</td>
-                <td>{Obj.userName}</td>
-                <td>{<img src={Obj.avatar} width={100} height={100} alt={"avatar"}/>}</td>
-                <td>
-                  <button onClick={() => this.props.handler(Obj.id)}>
+        <Container className="bg-light border">
+          {detailsLoaded === false ? (
+            <Row className="justify-content-md-center">
+              <Col xs lg="2">
+                No Data Available
+              </Col>
+            </Row>
+          ) : (
+            users.data.map((Obj) => {
+              return (
+                <Row
+                  md="2"
+                  className="justify-content-md-center border p-3"
+                  key={Obj.id}
+                  id={Obj.id}
+                >
+                  <Col xs lg="4">
+                    {Obj.first_name}
+                  </Col>
+                  <Button
+                    as={Col}
+                    md="2"
+                    variant="dark"
+                    size="md"
+                    onClick={() => this.handler(Obj.id)}
+                  >
                     Show
-                  </button>
-                </td>
-              </tr>
+                  </Button>
+                </Row>
+              );
+            })
+          )}
+        </Container>
+        <hr className="mt-5 mb-3 border text-primary border-primary border-5" />
+          {fetchUser.map((data) => {
+            return (
+              <Card className="mt-5" key={data.id}>
+                <Card.Img
+                  variant="top"
+                  className="h-3 w-3"
+                  src={data.avatar}
+                  alt="pic"
+                />
+                <Card.Body>
+                  <Card.Title>User {data.id}</Card.Title>
+                <ListGroup className="list-group-flush">
+                  <ListGroupItem>First Name :- {data.first_name}</ListGroupItem>
+                  <ListGroupItem>Last Name :- {data.last_name}</ListGroupItem>
+                  <ListGroupItem>Email :- {data.email}</ListGroupItem>
+                </ListGroup>
+                </Card.Body>
+              </Card>
             );
           })
-        )}
+        }
       </>
     );
   }
