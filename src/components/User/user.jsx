@@ -83,13 +83,12 @@ class User extends Component {
             })
           )}
         </Container>
-        <hr className="mt-5 mb-3 border text-primary border-primary border-5" />
+        <hr className="mt-4 mb-4 border text-primary border-primary border-5" />
           {fetchUser.map((data) => {
             return (
-              <Card className="mt-5" key={data.id}>
+              <Card className="mt-4 p-1" key={data.id}>
                 <Card.Img
                   variant="top"
-                  className="h-3 w-3"
                   src={data.avatar}
                   alt="pic"
                 />
