@@ -1,31 +1,5 @@
-h1{
-    text-align: center;
+.card-img-top {
+    width: 20% !important;
+    height: 250px;
+    object-fit:fill;
 }
-
-table {
-    margin-top: 3%;
-    text-align: center;
-    width: 70%;
-    margin: 0 auto;
-    border-collapse: collapse;
-}
-
-td, th {
-    padding: 10px;
-    border: black 1px solid;
-}
-
-button {
-    background-color:lightcoral;
-    border: none;
-    color: white;
-    padding: 16px 32px;
-    text-decoration: none;
-    margin: 4px 2px;
-    cursor: pointer;
-  }
-  
-  .activeClass{
-      background-color: darkcyan;
-      color: white;
-  }
