@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useWindowSize } from "@react-hook/window-size";
 import DesktopWindows from "@mui/icons-material/DesktopWindows";
 import TabletAndroidIcon from "@mui/icons-material/TabletAndroid";
 import SmartphoneIcon from "@mui/icons-material/Smartphone";
@@ -7,24 +6,10 @@ import User from "./user";
 import { Container } from "react-bootstrap";
 
 const Width = () => {
-  const [width] = useWindowSize();
-
-  const [windowWidth, setWindowWidth] = useState(width);
-  
-  useEffect( () => {
-    console.log("window did mount.")
-
-    return () => {
-      setWindowWidth(null);
-    }
-  }, [])
-
-  useEffect(() => {
-    setWindowWidth(width);
-  }, [width]);
-
+  const size = useWindowSize();
+  const windowWidth = size.width;
   return (
-    <>
+      <>
       {windowWidth > 820 ? (
         <>
           <DesktopWindows fontSize="large"  />
@@ -46,7 +31,28 @@ const Width = () => {
       </Container>
     </>
   );
-  
-};
+}
+
+const useWindowSize = () => {
+
+  const [windowSize, setWindowSize] = useState({
+    width: undefined,
+    height: undefined,
+  });
+
+  useEffect(() => {
+    const handleResize = () =>{
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    }
+
+    window.addEventListener("resize", handleResize);
+    handleResize();
+    return () => window.removeEventListener("resize", handleResize);
+  }, []); 
+  return windowSize;
+}
 
 export default Width
