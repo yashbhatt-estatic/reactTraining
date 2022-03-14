@@ -1,0 +1,20 @@
+✔ React Hooks :-
+▪	React hooks is additional features that introduce in React 16.8 and above of this version.
+▪   They let you use state and other React features without writing a class.
+▪	Hooks are backwards-compatible.Hooks solve a wide variety of seemingly unconnected problems in React that we’ve encountered over five years of writing and maintaining tens of thousands of components.
+▪	Hooks are functions that let you “hook into” React state and lifecycle features from function components. Hooks don’t work inside classes — they let you use React without classes.
+
+✔ List of Hooks : -
+
+1.	State Hook (useState) : It’s similar to this.setState in a class, except it doesn’t merge the old and new state together. 
+    The only argument to useState is the initial state.The initial state argument is only used during the first render.
+
+2.	Effect Hook (useEffect) : It's similar to side effects in class components.
+    It adds the ability to perform side effects from a function component. 
+    It serves the same purpose as componentDidMount, componentDidUpdate, and componentWillUnmount in React classes, but unified into a single API. 
+
+3.	Context Hook (useContext) : useContext lets you subscribe to React context without introducing nesting.
+
+4.	Reducer Hook (useReducer) : useReducer lets you manage local state of complex components with a reducer.
+
+5.	Callback Hook (useCallback) : useCallback will return a memoized version of the callback that only changes if one of the dependencies has changed. This is useful when passing callbacks to optimized child components that rely on reference equality to prevent unnecessary renders (e.g. shouldComponentUpdate).
