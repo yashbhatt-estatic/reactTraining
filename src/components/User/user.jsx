@@ -9,6 +9,7 @@ import {
 } from "react-bootstrap";
 import React, { Component } from "react";
 import "./assets/user.css";
+import { LinearProgress } from "@mui/material";
 
 class User extends Component {
   constructor(props) {
@@ -64,6 +65,7 @@ class User extends Component {
             <Row className="justify-content-md-center">
               <Col xs lg="2">
                 No Data Available
+              <LinearProgress color="inherit"/>
               </Col>
             </Row>
           ) : (
