@@ -4,7 +4,7 @@ import Apps from './components/App'
 class App extends Component {
   render() {
     return (
-      <div className="container">
+      <div className='bg-dark text-white'>
         <Apps/>
       </div>
     )
