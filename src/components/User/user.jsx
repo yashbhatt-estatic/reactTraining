@@ -1,6 +1,15 @@
-import { Button, Card, Col, Container, ListGroup, ListGroupItem, Row } from "react-bootstrap";
+import {
+  Button,
+  Card,
+  Col,
+  Container,
+  ListGroup,
+  ListGroupItem,
+  Row,
+} from "react-bootstrap";
 import React, { Component } from "react";
 import "./assets/user.css";
+import { LinearProgress } from "@mui/material";
 
 class User extends Component {
   constructor(props) {
@@ -47,6 +56,7 @@ class User extends Component {
 
   render() {
     const { users, detailsLoaded, fetchUser } = this.state;
+    const width = this.props.width;
 
     return (
       <>
@@ -55,6 +65,7 @@ class User extends Component {
             <Row className="justify-content-md-center">
               <Col xs lg="2">
                 No Data Available
+              <LinearProgress color="inherit"/>
               </Col>
             </Row>
           ) : (
@@ -83,27 +94,30 @@ class User extends Component {
             })
           )}
         </Container>
-        <hr className="mt-4 mb-4 border text-primary border-primary border-5" />
-          {fetchUser.map((data) => {
-            return (
-              <Card className="mt-4 p-1" key={data.id}>
-                <Card.Img
-                  variant="top"
-                  src={data.avatar}
-                  alt="pic"
-                />
-                <Card.Body>
-                  <Card.Title>User {data.id}</Card.Title>
-                <ListGroup className="list-group-flush">
-                  <ListGroupItem>First Name :- {data.first_name}</ListGroupItem>
-                  <ListGroupItem>Last Name :- {data.last_name}</ListGroupItem>
-                  <ListGroupItem>Email :- {data.email}</ListGroupItem>
-                </ListGroup>
-                </Card.Body>
-              </Card>
-            );
-          })
-        }
+        {width < 480 ? null : (
+          <>
+            <hr className="mt-4 mb-4 border text-primary border-primary border-5" />
+            {fetchUser.map((data) => {
+              return (
+                <Card className="mt-4 p-1" key={data.id}>
+                  <Card.Img variant="top" src={data.avatar} alt="pic" />
+                  <Card.Body>
+                    <Card.Title>User {data.id}</Card.Title>
+                    <ListGroup className="list-group-flush">
+                      <ListGroupItem>
+                        First Name :- {data.first_name}
+                      </ListGroupItem>
+                      <ListGroupItem>
+                        Last Name :- {data.last_name}
+                      </ListGroupItem>
+                      <ListGroupItem>Email :- {data.email}</ListGroupItem>
+                    </ListGroup>
+                  </Card.Body>
+                </Card>
+              );
+            })}
+          </>
+        )}
       </>
     );
   }
