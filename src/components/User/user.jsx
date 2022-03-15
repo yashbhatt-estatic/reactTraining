@@ -6,10 +6,11 @@ import {
   ListGroup,
   ListGroupItem,
   Row,
-} from "react-bootstrap";
-import React, { Component } from "react";
-import "./assets/user.css";
-import { LinearProgress } from "@mui/material";
+} from 'react-bootstrap';
+import React, { Component } from 'react';
+import './assets/user.css';
+import { LinearProgress } from '@mui/material';
+import PropTypes from 'prop-types';
 
 class User extends Component {
   constructor(props) {
@@ -23,28 +24,24 @@ class User extends Component {
     this.handler = this.handler.bind(this);
   }
 
-  handler(id) {
-    const users = this.state.users;
-
-    var data = users.data
-      .filter(function (item) {
-        return item.id === id;
-      })
-      .map(function (user) {
-        return user;
-      });
-
-    this.setState({
-      fetchUser: data
-    });
-  }
-
   componentDidMount() {
     setTimeout(this.getUser, 1000 * 2);
   }
 
+  handler(id) {
+    const { users } = this.state;
+
+    const data = users.data
+      .filter((item) => item.id === id)
+      .map((user) => user);
+
+    this.setState({
+      fetchUser: data,
+    });
+  }
+
   getUser() {
-    fetch("https://reqres.in/api/users?page=2")
+    fetch('https://reqres.in/api/users?page=2')
       .then((response) => response.json())
       .then((data) => {
         this.setState({
@@ -56,7 +53,7 @@ class User extends Component {
 
   render() {
     const { users, detailsLoaded, fetchUser } = this.state;
-    const width = this.props.width;
+    const { width } = this.props;
 
     return (
       <>
@@ -65,62 +62,76 @@ class User extends Component {
             <Row className="justify-content-md-center">
               <Col xs lg="2">
                 No Data Available
-              <LinearProgress color="inherit"/>
+                <LinearProgress color="inherit" />
               </Col>
             </Row>
           ) : (
-            users.data.map((Obj) => {
-              return (
-                <Row
+            users.data.map((Obj) => (
+              <Row
+                md="2"
+                className="justify-content-md-center border p-3"
+                key={Obj.id}
+                id={Obj.id}
+              >
+                <Col xs lg="4">
+                  {Obj.first_name}
+                </Col>
+                <Button
+                  as={Col}
                   md="2"
-                  className="justify-content-md-center border p-3"
-                  key={Obj.id}
-                  id={Obj.id}
+                  variant="dark"
+                  size="md"
+                  onClick={() => this.handler(Obj.id)}
                 >
-                  <Col xs lg="4">
-                    {Obj.first_name}
-                  </Col>
-                  <Button
-                    as={Col}
-                    md="2"
-                    variant="dark"
-                    size="md"
-                    onClick={() => this.handler(Obj.id)}
-                  >
-                    Show
-                  </Button>
-                </Row>
-              );
-            })
+                  Show
+                </Button>
+              </Row>
+            ))
           )}
         </Container>
         {width < 480 ? null : (
           <>
             <hr className="mt-4 mb-4 border text-primary border-primary border-5" />
-            {fetchUser.map((data) => {
-              return (
-                <Card className="mt-4 p-1" key={data.id}>
-                  <Card.Img variant="top" src={data.avatar} alt="pic" />
-                  <Card.Body>
-                    <Card.Title>User {data.id}</Card.Title>
-                    <ListGroup className="list-group-flush">
-                      <ListGroupItem>
-                        First Name :- {data.first_name}
-                      </ListGroupItem>
-                      <ListGroupItem>
-                        Last Name :- {data.last_name}
-                      </ListGroupItem>
-                      <ListGroupItem>Email :- {data.email}</ListGroupItem>
-                    </ListGroup>
-                  </Card.Body>
-                </Card>
-              );
-            })}
+            {fetchUser.map((data) => (
+              <Card className="mt-4 p-1" key={data.id}>
+                <Card.Img variant="top" src={data.avatar} alt="pic" />
+                <Card.Body>
+                  <Card.Title>
+                    User
+                    {data.id}
+                  </Card.Title>
+                  <ListGroup className="list-group-flush">
+                    <ListGroupItem>
+                      First Name :-
+                      {' '}
+                      {data.first_name}
+                    </ListGroupItem>
+                    <ListGroupItem>
+                      Last Name :-
+                      {' '}
+                      {data.last_name}
+                    </ListGroupItem>
+                    <ListGroupItem>
+                      Email :-
+                      {data.email}
+                    </ListGroupItem>
+                  </ListGroup>
+                </Card.Body>
+              </Card>
+            ))}
           </>
         )}
       </>
     );
   }
 }
+
+User.propTypes = {
+  width: PropTypes.number,
+};
+
+User.defaultProps = {
+  width: window.innerWidth,
+};
 
 export default User;
