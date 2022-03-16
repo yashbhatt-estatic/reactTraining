@@ -27,7 +27,7 @@ const useWindowSize = () => {
   return windowSize;
 };
 
-const Width = () => {
+function Width() {
   const size = useWindowSize();
   const windowWidth = size.width;
 
@@ -36,18 +36,24 @@ const Width = () => {
 
   useEffect(() => {
     setDeviceName(
-      windowWidth > 820 ? "Desktop" : windowWidth > 480 ? "Tablet" : "Mobile"
+      windowWidth > 820 ? 'Desktop' : windowWidth > 480 ? 'Tablet' : 'Mobile',
     );
 
     setDevice(
-      windowWidth > 820 ? <DesktopWindows fontSize="large" /> : windowWidth > 480 ? <TabletAndroidIcon fontSize="large" /> : <SmartphoneIcon fontSize="large" />
-    )
+      windowWidth > 820 ? <DesktopWindows fontSize="large" /> : windowWidth > 480 ? <TabletAndroidIcon fontSize="large" /> : <SmartphoneIcon fontSize="large" />,
+    );
   }, [windowWidth]);
 
   return (
     <>
       <h3 className="text-center my-3">
-        {device} You are using {deviceName} device and width is {windowWidth}
+        {device}
+        {' '}
+        You are using
+        {deviceName}
+        {' '}
+        device and width is
+        {windowWidth}
       </h3>
       <Container className="mt-2 text-dark">
         <Counter />

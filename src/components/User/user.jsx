@@ -91,47 +91,48 @@ class User extends Component {
         </Container>
         {width < 480 ? null : (
           <>
-          <hr className="my-4 border text-primary border-primary border-5" />
-        {fetchUser.map((data) => {
-          return (
-            <Card className="mt-4 w-75 mx-auto p-3" key={data.id}>
-              <Row className='p-4'>
-                <Col lg='3' md='5' className='p-2'>
-                  <Card.Img
-                    variant="top"
-                    src={data.avatar}
-                    alt="pic"
-                  />
-                </Col>
-                <Col lg='9' md='7'>
-                  <Card.Body>
-                    <Card.Title>User {data.id}</Card.Title>
-                    <ListGroup className="list-group-flush">
-                      <ListGroupItem>
-                        <Row>
-                          <Col md='12' lg='5'>First Name :- </Col>
-                          <Col md='12' lg='7'>{data.first_name}</Col>
-                        </Row>
-                      </ListGroupItem>
-                      <ListGroupItem>
-                        <Row>
-                          <Col md='12' lg='5'>Last Name :-</Col>
-                          <Col md='12' lg='7'>{data.last_name}</Col>
-                        </Row>
-                      </ListGroupItem>
-                      <ListGroupItem>
-                      <Row>
-                      <Col md='12' lg='5'>Email :- </Col>
-                      <Col md='12' lg='7'>{data.email}</Col>
-                      </Row>
-                      </ListGroupItem>
-                    </ListGroup>
-                  </Card.Body>
-                </Col>
-              </Row>
-            </Card>
-              );
-            })}
+            <hr className="my-4 border text-primary border-primary border-5" />
+            {fetchUser.map((data) => (
+              <Card className="mt-4 w-75 mx-auto p-3" key={data.id}>
+                <Row className="p-4">
+                  <Col lg="3" md="5" className="p-2">
+                    <Card.Img
+                      variant="top"
+                      src={data.avatar}
+                      alt="pic"
+                    />
+                  </Col>
+                  <Col lg="9" md="7">
+                    <Card.Body>
+                      <Card.Title>
+                        User
+                        {data.id}
+                      </Card.Title>
+                      <ListGroup className="list-group-flush">
+                        <ListGroupItem>
+                          <Row>
+                            <Col md="12" lg="5">First Name :- </Col>
+                            <Col md="12" lg="7">{data.first_name}</Col>
+                          </Row>
+                        </ListGroupItem>
+                        <ListGroupItem>
+                          <Row>
+                            <Col md="12" lg="5">Last Name :-</Col>
+                            <Col md="12" lg="7">{data.last_name}</Col>
+                          </Row>
+                        </ListGroupItem>
+                        <ListGroupItem>
+                          <Row>
+                            <Col md="12" lg="5">Email :- </Col>
+                            <Col md="12" lg="7">{data.email}</Col>
+                          </Row>
+                        </ListGroupItem>
+                      </ListGroup>
+                    </Card.Body>
+                  </Col>
+                </Row>
+              </Card>
+            ))}
           </>
         )}
       </>
