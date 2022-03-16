@@ -13,7 +13,6 @@ const Width = () => {
       {windowWidth > 820 ? (
         <>
           <DesktopWindows fontSize="large"  />
-          <h1>Hello user</h1>
           <h2>You are using Desktop device and width is {windowWidth}</h2>
         </>
       ) : windowWidth > 480 ? (
