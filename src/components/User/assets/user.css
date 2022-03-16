@@ -1,5 +1,3 @@
 .card-img-top {
-    width: 30% !important;
-    height: 250px;
-    object-fit:fill;
+    height: 200px !important;
 }
