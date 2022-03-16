@@ -26,4 +26,8 @@ yarn-debug.log*
 yarn-error.log*
 
 #setting
+<<<<<<< HEAD
 /.vscode
+=======
+/.vscode
+>>>>>>> 40b4d70 (🐛 git ignore add)
