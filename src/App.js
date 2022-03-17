@@ -1,12 +1,13 @@
 import React, { PureComponent } from 'react';
+import { BrowserRouter } from 'react-router-dom';
 import Apps from './components/App';
 
 class App extends PureComponent {
   render() {
     return (
-      <div className="bg-dark text-white" style={{ minHeight: '1041px' }}>
+      <BrowserRouter>
         <Apps />
-      </div>
+      </BrowserRouter>
     );
   }
 }

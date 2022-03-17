@@ -1,15 +1,21 @@
 import React, { PureComponent } from 'react';
-import Width from '../User';
+import Header from '../Layout/Header';
+import Footer from '../Layout/Footer';
+import AppRoutes from '../../routes';
 
-class App extends PureComponent {
+class Apps extends PureComponent {
   render() {
     return (
       <>
-        <h1 className="text-center">Welcome to the page</h1>
-        <Width />
+        <Header />
+        <div className="bg-dark text-white" style={{ minHeight: '900px' }}>
+          <h1 className="text-center">Welcome to the page</h1>
+          <AppRoutes />
+        </div>
+        <Footer />
       </>
     );
   }
 }
 
-export default App;
+export default Apps;

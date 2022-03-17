@@ -1,0 +1,8 @@
+.footer {
+  text-align: center;
+  max-width: 100% !important;
+  line-height: 20px;
+  position: fixed;
+  height: 50px !important;
+  bottom: 0;
+}
