@@ -2,9 +2,6 @@ import React, { useState, useEffect } from 'react';
 import DesktopWindows from '@mui/icons-material/DesktopWindows';
 import TabletAndroidIcon from '@mui/icons-material/TabletAndroid';
 import SmartphoneIcon from '@mui/icons-material/Smartphone';
-import { Container } from 'react-bootstrap';
-import User from './user';
-import Counter from './counter';
 
 const useWindowSize = () => {
   const [windowSize, setWindowSize] = useState({
@@ -45,21 +42,16 @@ function Width() {
   }, [windowWidth]);
 
   return (
-    <>
-      <h3 className="text-center my-3">
-        {device}
-        {' '}
-        You are using
-        {deviceName}
-        {' '}
-        device and width is
-        {windowWidth}
-      </h3>
-      <Container className="mt-2 text-dark">
-        <Counter />
-        <User width={windowWidth} />
-      </Container>
-    </>
+    <h3 className="text-center my-3">
+      {device}
+      {'  '}
+      You are using
+      {deviceName}
+      {' '}
+      device and width is :
+      {' '}
+      {windowWidth}
+    </h3>
   );
 }
 

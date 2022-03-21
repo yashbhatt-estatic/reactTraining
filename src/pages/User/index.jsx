@@ -10,7 +10,6 @@ import {
 import React, { Component } from 'react';
 import './assets/user.css';
 import { LinearProgress } from '@mui/material';
-import PropTypes from 'prop-types';
 
 class User extends Component {
   constructor(props) {
@@ -22,15 +21,20 @@ class User extends Component {
     };
     this.getUser = this.getUser.bind(this);
     this.handler = this.handler.bind(this);
+    this.updateDimensions = this.updateDimensions.bind(this);
   }
 
   componentDidMount() {
     setTimeout(this.getUser, 1000 * 2);
+    window.addEventListener('resize', this.updateDimensions);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateDimensions);
   }
 
   handler(id) {
     const { users } = this.state;
-
     const data = users.data
       .filter((item) => item.id === id)
       .map((user) => user);
@@ -51,13 +55,18 @@ class User extends Component {
       });
   }
 
+  updateDimensions() {
+    this.setState({ width: window.innerWidth });
+  }
+
   render() {
-    const { users, detailsLoaded, fetchUser } = this.state;
-    const { width } = this.props;
+    const {
+      users, detailsLoaded, fetchUser, width,
+    } = this.state;
 
     return (
       <>
-        <Container className="bg-light border w-75">
+        <Container className="bg-light border mx-auto w-50 my-5 text-dark">
           {detailsLoaded === false ? (
             <Row className="justify-content-md-center">
               <Col xs lg="2">
@@ -91,10 +100,10 @@ class User extends Component {
         </Container>
         {width < 480 ? null : (
           <>
-            <hr className="my-4 border text-primary border-primary border-5" />
+            <hr className="my-5 border text-primary border-primary border-5" />
             {fetchUser.map((data) => (
-              <Card className="mt-4 w-75 mx-auto p-3" key={data.id}>
-                <Row className="p-4">
+              <Card className="w-50 mx-auto p-3" key={data.id}>
+                <Row className="p-2">
                   <Col lg="3" md="5" className="p-2">
                     <Card.Img
                       variant="top"
@@ -139,13 +148,5 @@ class User extends Component {
     );
   }
 }
-
-User.propTypes = {
-  width: PropTypes.number,
-};
-
-User.defaultProps = {
-  width: window.innerWidth,
-};
 
 export default User;
