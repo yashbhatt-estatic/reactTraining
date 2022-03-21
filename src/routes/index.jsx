@@ -2,7 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 import Counter from '../pages/Counter';
 import NotFound from '../pages/NotFound';
 import Width from '../pages/Width';
-import User from '../components/User';
+import User from '../pages/User';
 
 function AppRoutes() {
   return (
