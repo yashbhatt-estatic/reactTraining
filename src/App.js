@@ -9,7 +9,7 @@ class App extends PureComponent {
     return (
       <BrowserRouter>
         <Header />
-        <div className="bg-dark text-white" style={{ minHeight: '900px' }}>
+        <div className="bg-dark text-white" style={{ minHeight: '800px' }}>
           <h1 className="text-center">Welcome to the page</h1>
           <AppRoutes />
         </div>

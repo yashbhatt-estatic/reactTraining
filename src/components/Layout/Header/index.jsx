@@ -16,6 +16,9 @@ function Header() {
             <li className="nav-item">
               <Button><Link className="text-decoration-none text-dark h4" to="/Counter">Counter</Link></Button>
             </li>
+            <li className="nav-item">
+              <Button><Link className="text-decoration-none text-dark h4" to="/QueryParameter">Query-Parameter</Link></Button>
+            </li>
           </ul>
         </div>
       </div>
