@@ -1,18 +1,25 @@
-/* eslint-disable react/void-dom-elements-no-children */
 import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import {
-  Checkbox, FormControlLabel, Radio, RadioGroup, TextField,
+  Checkbox, FormControlLabel, Radio, RadioGroup,
 } from '@mui/material';
 import './style.scss';
 import {
   Button, Card, Col, Container, ListGroup, ListGroupItem, Row,
 } from 'react-bootstrap';
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 function SignupForm() {
   const [data, setData] = useState({});
   const [card, setCard] = useState(false);
+  const [showPass, setShowPass] = useState();
+
+  const password = () => {
+    setShowPass(!showPass);
+  };
+
   const formik = useFormik({
     initialValues: {
       firstName: '',
@@ -42,7 +49,7 @@ function SignupForm() {
     },
   });
   return (
-    <Container className="bg-light border mx-auto w-50 p-5 text-dark">
+    <Container className="bg-light border mx-auto w-50 p-4 text-dark">
       <form onSubmit={formik.handleSubmit} className="form">
         <Row>
           <Col md="12" lg="3">
@@ -50,10 +57,11 @@ function SignupForm() {
             {' '}
           </Col>
           <Col md="12" lg="3">
-            <TextField
+            <input
               id="firstName"
               name="firstName"
               type="text"
+              className="form-control"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.firstName}
@@ -67,10 +75,11 @@ function SignupForm() {
             {' '}
           </Col>
           <Col md="12" lg="3">
-            <TextField
+            <input
               id="lastName"
               name="lastName"
               type="text"
+              className="form-control"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.lastName}
@@ -87,14 +96,18 @@ function SignupForm() {
             {' '}
           </Col>
           <Col md="12" lg="3">
-            <TextField
-              id="password"
-              name="password"
-              type="password"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.password}
-            />
+            <div className="form-control d-inline-flex p-1">
+              <input
+                id="password"
+                name="password"
+                type={showPass ? 'text' : 'password'}
+                className="border-0"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.password}
+              />
+              <button type="button" id="btn" onClick={password}>{showPass ? <RemoveRedEyeIcon /> : <VisibilityOffIcon />}</button>
+            </div>
             {formik.touched.password && formik.errors.password ? (
               <div>{formik.errors.password}</div>
             ) : null}
@@ -104,10 +117,11 @@ function SignupForm() {
             {' '}
           </Col>
           <Col md="12" lg="3">
-            <TextField
+            <input
               id="confirmPassword"
               name="confirmPassword"
               type="password"
+              className="form-control"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.confirmPassword}
@@ -124,10 +138,11 @@ function SignupForm() {
             {' '}
           </Col>
           <Col md="12" lg="3">
-            <TextField
+            <input
               id="email"
               name="email"
               type="email"
+              className="form-control"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.email}
@@ -191,17 +206,17 @@ function SignupForm() {
           </Col>
         </Row>
         <br />
-        <Container className="col-6 gap-2">
-          <Button className="mx-2" type="submit">
+        <Container className="col-6 text-center">
+          <Button className="me-md-2" type="submit">
             Submit
           </Button>
-          <Button className="mx-2" type="reset" onClick={formik.resetForm}>
+          <Button type="reset" onClick={formik.resetForm}>
             Reset
           </Button>
         </Container>
       </form>
       {card ? (
-        <Card className="w-75 my-3 mx-auto card">
+        <Card className="w-75 my-4 mx-auto card">
           <Row>
             <Col>
               <Card.Body>
@@ -248,7 +263,9 @@ function SignupForm() {
                         {' '}
                       </Col>
                       <Col md="12" lg="3">
-                        {data.email}
+                        <span className="overflow w-50">
+                          <span>{data.email}</span>
+                        </span>
                       </Col>
                       <Col md="12" lg="3">
                         Department :-

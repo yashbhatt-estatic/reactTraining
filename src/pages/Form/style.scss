@@ -5,9 +5,35 @@
         width: 150px;
         border: none;
         border-radius: 10px;
-    }    
+    }
+    
+    #btn {
+        padding: 5px;
+        margin-left: -20px;
+    }
 }
 .card {
     box-shadow: 5px 5px 10px lightgrey;
     border-radius: 15px;
+}
+
+.overflow {
+    overflow: hidden;
+    -ms-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    float: left;
+  
+    &:hover {
+        overflow: visible;
+        font-size: 20px;
+
+        span {
+            position: relative;
+            background-color: darkgray;
+          
+            box-shadow: 0 0 4px 0 black;
+            border-radius: 1px;
+        }
+    }
 }
