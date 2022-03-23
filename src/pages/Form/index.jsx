@@ -67,7 +67,7 @@ function SignupForm() {
               value={formik.values.firstName}
             />
             {formik.touched.firstName && formik.errors.firstName ? (
-              <div>{formik.errors.firstName}</div>
+              <div className="error">{formik.errors.firstName}</div>
             ) : null}
           </Col>
           <Col md="12" lg="3">
@@ -85,7 +85,7 @@ function SignupForm() {
               value={formik.values.lastName}
             />
             {formik.touched.lastName && formik.errors.lastName ? (
-              <div>{formik.errors.lastName}</div>
+              <div className="error">{formik.errors.lastName}</div>
             ) : null}
           </Col>
         </Row>
@@ -109,7 +109,7 @@ function SignupForm() {
               <button type="button" id="btn" onClick={password}>{showPass ? <RemoveRedEyeIcon /> : <VisibilityOffIcon />}</button>
             </div>
             {formik.touched.password && formik.errors.password ? (
-              <div>{formik.errors.password}</div>
+              <div className="error">{formik.errors.password}</div>
             ) : null}
           </Col>
           <Col md="12" lg="3">
@@ -127,7 +127,7 @@ function SignupForm() {
               value={formik.values.confirmPassword}
             />
             {formik.touched.confirmPassword && formik.errors.confirmPassword ? (
-              <div>{formik.errors.confirmPassword}</div>
+              <div className="error">{formik.errors.confirmPassword}</div>
             ) : null}
           </Col>
         </Row>
@@ -147,7 +147,7 @@ function SignupForm() {
               onBlur={formik.handleBlur}
               value={formik.values.email}
             />
-            {formik.touched.email && formik.errors.email ? <div>{formik.errors.email}</div> : null}
+            {formik.touched.email && formik.errors.email ? <div className="error">{formik.errors.email}</div> : null}
           </Col>
           <Col md="12" lg="3">
             Gender :-
@@ -166,7 +166,7 @@ function SignupForm() {
               <FormControlLabel value="other" control={<Radio />} label="Other" />
             </RadioGroup>
             {formik.touched.gender && formik.errors.gender ? (
-              <div>{formik.errors.gender}</div>
+              <div className="error">{formik.errors.gender}</div>
             ) : null}
           </Col>
         </Row>
@@ -181,7 +181,7 @@ function SignupForm() {
               onBlur={formik.handleBlur}
             />
             Accept terms & Condition
-            {formik.touched.terms && formik.errors.terms ? <div>{formik.errors.terms}</div> : null}
+            {formik.touched.terms && formik.errors.terms ? <div className="error">{formik.errors.terms}</div> : null}
           </Col>
           <Col md="12" lg="3">
             Department :-
@@ -201,7 +201,7 @@ function SignupForm() {
             </select>
 
             {formik.touched.department && formik.errors.department ? (
-              <div>{formik.errors.department}</div>
+              <div className="error">{formik.errors.department}</div>
             ) : null}
           </Col>
         </Row>
