@@ -8,19 +8,22 @@ function Header() {
         <div className="header">
           <ul className="navbar-nav">
             <li className="nav-item">
-              <Button><Link className="text-decoration-none text-dark h4" to="/">Home</Link></Button>
+              <Button><Link className="text-decoration-none text-dark h5" to="/">Home</Link></Button>
             </li>
             <li className="nav-item">
-              <Button><Link className="text-decoration-none text-dark h4" to="/User">User</Link></Button>
+              <Button><Link className="text-decoration-none text-dark h5" to="/User">User</Link></Button>
             </li>
             <li className="nav-item">
-              <Button><Link className="text-decoration-none text-dark h4" to="/Counter">Counter</Link></Button>
+              <Button><Link className="text-decoration-none text-dark h5" to="/Counter">Counter</Link></Button>
             </li>
             <li className="nav-item">
-              <Button><Link className="text-decoration-none text-dark h4" to="/QueryParameter">Query-Parameter</Link></Button>
+              <Button><Link className="text-decoration-none text-dark h5" to="/QueryParameter">Query-Parameter</Link></Button>
             </li>
             <li className="nav-item">
-              <Button><Link className="text-decoration-none text-dark h4" to="/Form">SignupForm</Link></Button>
+              <Button><Link className="text-decoration-none text-dark h5" to="/Form">SignupForm</Link></Button>
+            </li>
+            <li className="nav-item">
+              <Button><Link className="text-decoration-none text-dark h5" to="/IpRouting">InputRouting</Link></Button>
             </li>
           </ul>
         </div>

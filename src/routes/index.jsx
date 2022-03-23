@@ -5,6 +5,7 @@ import Width from '../pages/Width';
 import User from '../pages/User';
 import QueryParameter from '../pages/Query Parameter';
 import SignupForm from '../pages/Form';
+import IpRouting from '../pages/InputRouting';
 
 function AppRoutes() {
   return (
@@ -16,6 +17,7 @@ function AppRoutes() {
         <Route path=":users" element={<QueryParameter />} />
       </Route>
       <Route path="/Form" element={<SignupForm />} />
+      <Route path="/IpRouting" element={<IpRouting />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
