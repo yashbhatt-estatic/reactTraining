@@ -9,7 +9,7 @@ import {
 } from 'react-bootstrap';
 import React, { Component } from 'react';
 import './assets/user.css';
-import { LinearProgress } from '@mui/material';
+import Loader from '../../components/Loader';
 
 class User extends Component {
   constructor(props) {
@@ -67,14 +67,15 @@ class User extends Component {
     return (
       <>
         <Container className="bg-light border mx-auto w-50 my-5 text-dark">
-          {detailsLoaded === false ? (
+          <Loader loadData={detailsLoaded} />
+          {/* {detailsLoaded === false ? (
             <Row className="justify-content-md-center">
               <Col xs lg="2">
                 No Data Available
-                <LinearProgress color="inherit" />
               </Col>
             </Row>
-          ) : (
+          ) : ( */}
+          {
             users.data.map((Obj) => (
               <Row
                 md="2"
@@ -96,7 +97,7 @@ class User extends Component {
                 </Button>
               </Row>
             ))
-          )}
+          }
         </Container>
         {width < 480 ? null : (
           <>
@@ -149,4 +150,5 @@ class User extends Component {
   }
 }
 
-export default User;
+// export default User;
+export default Loader(User);
