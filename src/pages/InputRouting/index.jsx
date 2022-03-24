@@ -9,6 +9,7 @@ function IpRouting() {
   const navigate = useNavigate();
   const [selectedRows, setSelection] = useState([]);
   const [pageSize, setPageSize] = useState(5);
+  const [data, setData] = useState();
 
   const formik = useFormik({
     initialValues: {
@@ -118,6 +119,9 @@ function IpRouting() {
           pageSize={pageSize}
           rowsPerPageOptions={[2, 5, 7]}
           onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+          onSelectionModelChange={(newSelection) => {
+            setData(` ${newSelection} `);
+          }}
           onSelectionChange={(newSelection) => {
             setSelection(newSelection.rowIds);
           }}
@@ -126,6 +130,11 @@ function IpRouting() {
           <span>{row}</span>
         ))}
       </Container>
+      <h1>
+        Selected Data:-
+        {' '}
+        {data}
+      </h1>
     </Container>
   );
 }
