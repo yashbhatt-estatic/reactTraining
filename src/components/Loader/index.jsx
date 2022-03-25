@@ -20,7 +20,7 @@ const Loader = (ComposedComponent) => class extends Component {
   }
 
   render() {
-    return this.state.data ? <img src={loader} alt="loader" /> : <ComposedComponent />;
+    return this.state.data ? <img className="loader" src={loader} alt="loader" /> : <ComposedComponent />;
   }
 };
 
