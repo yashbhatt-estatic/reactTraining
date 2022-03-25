@@ -24,6 +24,7 @@
         "react/no-array-index-key": "off",
         "react/no-access-state-in-setState": "off",
         "no-nested-ternary": "off",
-        "linebreak-style": [0, "error", "windows"]
+        "linebreak-style": [0, "error", "windows"],
+        "default-param-last" : "off",
     }
 }
