@@ -1,14 +1,27 @@
-import { useEffect, useState } from 'react';
+/* eslint-disable react/destructuring-assignment */
+import { Component } from 'react';
 import loader from './assets/loader.svg';
+import './assets/loader.scss';
 
-export default function Loader() {
-  const [loadData, setLoadData] = useState(false);
+const Loader = (ComposedComponent) => class extends Component {
+  constructor() {
+    super();
+    this.state = {
+      data: true,
+    };
+  }
 
-  useEffect(() => {
-    setLoadData(props.loadData);
-  }, [loadData]);
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({
+        data: false,
+      });
+    }, 1000 * 2);
+  }
 
-  return (
-    loadData === 'false' ? <img src={loader} alt="loader" /> : null
-  );
-}
+  render() {
+    return this.state.data ? <img src={loader} alt="loader" /> : <ComposedComponent />;
+  }
+};
+
+export default Loader;
