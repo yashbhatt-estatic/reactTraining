@@ -25,6 +25,5 @@
         "react/no-access-state-in-setState": "off",
         "no-nested-ternary": "off",
         "linebreak-style": [0, "error", "windows"],
-        "default-param-last" : "off",
     }
 }
