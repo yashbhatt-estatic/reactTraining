@@ -1,5 +1,4 @@
 var userServices = require('../services/user.services');
-var userAuthController = require('./user.auth.controller');
 var nodeMail = require('../helper/helperFun');
 
 const getUser = async(req, res) => {
@@ -23,15 +22,36 @@ const getUser = async(req, res) => {
     }
 }
 
+const getUserById = async(req, res) => {
+    try {
+        const result = await userServices.getUserById(req);
+        if (result) {
+            return res.status(200).json({
+                success: true,
+                error: false,
+                data: result,
+                msg: result === null ? "User data fetched successfully." : "User not found."
+            });
+        }
+    } catch (err) {
+        return res.status(500).json({
+            success: false,
+            error: true,
+            data: err,
+            msg: "Error while getting user."
+        });
+    }
+}
+
 const createUser = async(req, res) => {
     try {
         const result = await userServices.createUser(req);
-        nodeMail.contact(result.email, result.username, req.body.password);
+        nodeMail.contact(result.email);
         return res.status(200).json({
             success: true,
             error: false,
             data: result,
-            msg: "Data Registered successfully."
+            msg: result === null ? "Data Registered successfully." : "User already exists."
         });
     } catch (err) {
         return res.status(500).json({
@@ -44,36 +64,6 @@ const createUser = async(req, res) => {
 
 }
 
-const loginUser = async(req, res) => {
-    try {
-        const user = await userServices.loginUser(req.body.email);
-        const check = await userAuthController.checkPassword(req.body.password, user.password);
-        if (check) {
-            const token = await userAuthController.tokenization(user.username, user.password);
-            return res.status(200).json({
-                success: true,
-                error: false,
-                data: user,
-                token: token,
-                msg: "User logged in successfully."
-            });
-        } else {
-            return res.status(500).json({
-                success: false,
-                error: true,
-                msg: 'Invalid email or password'
-            });
-        }
-    } catch (err) {
-        return res.status(500).json({
-            success: false,
-            error: true,
-            data: err,
-            msg: "Error while logging user."
-        });
-    }
-}
-
 const updateUser = async(req, res) => {
     try {
         const result = await userServices.updateUser(req);
@@ -81,7 +71,7 @@ const updateUser = async(req, res) => {
             success: true,
             error: false,
             data: result,
-            msg: "User Updated successfully."
+            msg: result === null ? "User Updated successfully." : "User not found."
         });
     } catch (err) {
         return res.status(500).json({
@@ -93,25 +83,6 @@ const updateUser = async(req, res) => {
     }
 }
 
-const softDelete = async(req, res) => {
-    try {
-        const result = await userServices.softDelete(req.params.id);
-        return res.status(200).json({
-            success: true,
-            error: false,
-            data: result,
-            msg: "User Deleted successfully."
-        });
-    } catch (err) {
-        return res.status(500).json({
-            success: false,
-            error: true,
-            data: err,
-            msg: "Error while deleting user."
-        });
-    }
-}
-
 const deleteUser = async(req, res) => {
     try {
         const result = await userServices.deleteUser(req.params.id);
@@ -119,7 +90,7 @@ const deleteUser = async(req, res) => {
             success: true,
             error: false,
             data: result,
-            msg: "User Deleted successfully."
+            msg: result === null ? "User Deleted successfully." : "User not found."
         });
     } catch (err) {
         return res.status(500).json({
@@ -131,11 +102,31 @@ const deleteUser = async(req, res) => {
     }
 }
 
+// Soft Delete
+// const softDelete = async(req, res) => {
+//     try {
+//         const result = await userServices.softDelete(req.params.id);
+//         return res.status(200).json({
+//             success: true,
+//             error: false,
+//             data: result,
+//             msg: "User Deleted successfully."
+//         });
+//     } catch (err) {
+//         return res.status(500).json({
+//             success: false,
+//             error: true,
+//             data: err,
+//             msg: "Error while deleting user."
+//         });
+//     }
+// }
+
+
 module.exports = {
     getUser,
+    getUserById,
     createUser,
-    loginUser,
     updateUser,
-    softDelete,
     deleteUser
 };

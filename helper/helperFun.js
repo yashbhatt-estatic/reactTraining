@@ -1,4 +1,4 @@
-exports.contact = function(mail, username, password) {
+exports.contact = function(mail) {
     var nodemailer = require('nodemailer');
     var smtpTransport = require('nodemailer-smtp-transport');
 
@@ -15,7 +15,7 @@ exports.contact = function(mail, username, password) {
         from: from,
         to: mail,
         subject: ' | Welcome to the website ! |',
-        text: 'You are successfully registered with Username ' + username + ' and your password is ' + password + '.'
+        text: 'You are successfully registered with email id ' + mail + '.'
     }
     smtpTransport.sendMail(mailOptions, function(error, response) {
         if (error) {

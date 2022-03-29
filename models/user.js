@@ -3,12 +3,12 @@ const Schema = mongoose.Schema;
 
 const user = new Schema({
 
-    first_name: {
+    firstName: {
         type: String,
         required: [true, 'First name is required'],
         trim: true
     },
-    last_name: {
+    lastName: {
         type: String,
         required: [true, 'Last name is required'],
         trim: true
@@ -19,25 +19,30 @@ const user = new Schema({
         trim: true,
         unique: [true, 'Email is already exist']
     },
-    username: {
-        type: String,
-        required: [true, 'Username is required'],
-        trim: true,
-        unique: [true, 'Username is already exist']
-    },
-    password: {
-        type: String,
-        required: [true, 'Password is required'],
-        trim: true
-    },
-    company: {
+    city: {
         type: String,
         required: [false],
         trim: true
     },
-    profile_pic: {
+    state: {
         type: String,
-        required: [false]
+        required: [false],
+        trim: true
+    },
+    country: {
+        type: String,
+        required: [false],
+        trim: true
+    },
+    department: {
+        type: String,
+        required: [false],
+        trim: true
+    },
+    gender: {
+        type: String,
+        required: [false],
+        trim: true,
     },
     is_delete: {
         type: Boolean,
@@ -47,4 +52,4 @@ const user = new Schema({
     timestamps: true
 });
 
-module.exports = mongoose.model('User', user);
+module.exports = mongoose.model('ReactNodeUsers', user);
