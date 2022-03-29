@@ -1,26 +1,32 @@
 {
     "development": {
-        "username": "root",
-        "password": null,
-        "database": "training",
-        "host": "127.0.0.1",
-        "dialect": "mysql",
-        "define": {
-            "timestamps": false
+      "database": {
+        "url": "mongodb://localhost/mongoose_dev",
+        "options": {
+          "useNewUrlParser": true
         }
+      }
     },
     "test": {
-        "username": "root",
-        "password": null,
-        "database": "database_test",
-        "host": "127.0.0.1",
-        "dialect": "mysql"
+      "database": {
+        "url": "mongodb://localhost/mongoose_test",
+        "options": {
+          "useNewUrlParser": true
+        }
+      }
     },
     "production": {
+      "database": {
+        "protocol": "mongodb",
         "username": "root",
-        "password": null,
-        "database": "database_production",
-        "host": "127.0.0.1",
-        "dialect": "mysql"
+        "password": "password",
+        "name": "database_production",
+        "host": "localhost",
+        "port": "",
+        "options": {
+          "useNewUrlParser": true
+        }
+      }
     }
-}
+  }
+  

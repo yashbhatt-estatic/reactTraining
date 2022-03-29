@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 var authentication = require('../middleware/authentication');
 const multer = require('multer');
-const { sequelize } = require('../models');
 var userController = require('./../controllers/user.controller');
 
 const storage = multer.diskStorage({
@@ -17,14 +16,14 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-router.post('/register', upload.any('upload_file'), userController.createUser);
+router.post('/register', upload.any('profile_pic'), userController.createUser);
 
 router.post('/login', userController.loginUser);
 
 /* GET users listing. */
 router.get('/', authentication, userController.getUser);
 
-router.put('/update/:id', authentication, upload.any('upload_file'), userController.updateUser);
+router.put('/update/:id', authentication, upload.any('profile_pic'), userController.updateUser);
 
 router.put('/soft/:id', authentication, userController.softDelete);
 

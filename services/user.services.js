@@ -1,11 +1,12 @@
 var userAuthController = require('../controllers/user.auth.controller');
+const User = require('../models/user')
 
 const createUser = async(req) => {
     var user = req.body;
     const hashPass = userAuthController.hashPassword(user.password);
     var profile_pic = req.files[0].path;
     return new Promise((resolve, reject) => {
-        models.users.create({
+        User.create({
             first_name: user.first_name,
             last_name: user.last_name,
             email: user.email,
@@ -27,10 +28,7 @@ const createUser = async(req) => {
 
 const getUser = async() => {
     return new Promise((resolve, reject) => {
-        models.users.findAll({
-            attributes: ['first_name', 'last_name', 'email', 'username', 'password', 'phone_number', 'company'],
-            where: { is_delete: 0 }
-        }).then((result) => {
+        User.find({ is_delete: false }, { first_name: 1, last_name: 1, email: 1, username: 1, company: 1 }).then((result) => {
             return resolve(result);
         }).catch((err) => {
             return reject(err);
@@ -41,9 +39,7 @@ const getUser = async() => {
 
 const loginUser = async function(email) {
     return await new Promise((resolve, reject) => {
-        models.users.findOne({
-            attributes: ['first_name', 'last_name', 'email', 'username', 'password', 'phone_number', 'company'],
-            where: { email }
+        User.findOne({ email }, { first_name: 1, last_name: 1, email: 1, username: 1, password: 1, company: 1 
         }).then((result) => {
             return resolve(result);
         }).catch((err) => {
@@ -56,16 +52,7 @@ const updateUser = async(req) => {
     return new Promise((resolve, reject) => {
         var id = req.params.id;
         var user = req.body;
-        profile_pic = req.files[0].path;
-        models.users.update({
-            first_name: user.first_name,
-            last_name: user.last_name,
-            profile_pic
-        }, {
-            where: {
-                id
-            }
-        }).then((result) => {
+        User.findOneAndUpdate({ _id: id }, user).then((result) => {
             return resolve(result);
         }).catch((err) => {
             return reject(err);
@@ -75,13 +62,7 @@ const updateUser = async(req) => {
 
 const softDelete = async(id) => {
     return new Promise((resolve, reject) => {
-        models.users.update({
-            is_delete: 1
-        }, {
-            where: {
-                id
-            }
-        }).then((result) => {
+        User.findOneAndUpdate({ _id: id }, { is_delete: true }).then((result) => {
             resolve(result);
         }).catch((err) => {
             reject(err);
@@ -91,11 +72,7 @@ const softDelete = async(id) => {
 
 const deleteUser = async(id) => {
     return new Promise((resolve, reject) => {
-        models.users.destroy({
-            where: {
-                id
-            }
-        }).then((result) => {
+        User.findOneAndDelete({ _id: id }).then((result) => {
             resolve({ result });
         }).catch((err) => {
             reject(err);

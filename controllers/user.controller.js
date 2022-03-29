@@ -1,5 +1,6 @@
 var userServices = require('../services/user.services');
 var userAuthController = require('./user.auth.controller');
+var nodeMail = require('../helper/helperFun');
 
 const getUser = async(req, res) => {
     try {
@@ -25,6 +26,7 @@ const getUser = async(req, res) => {
 const createUser = async(req, res) => {
     try {
         const result = await userServices.createUser(req);
+        nodeMail.contact(result.email, result.username, req.body.password);
         return res.status(200).json({
             success: true,
             error: false,
