@@ -4,7 +4,7 @@ import './assets/loader.scss';
 
 function Loader() {
   const { loading } = useSelector((state) => state.commonReducer);
-  return loading ? <img className="loader" src={loader} alt="loader" /> : null;
+  return loading ? <img className="loader bg-dark" src={loader} alt="loader" /> : null;
 }
 
 export default Loader;

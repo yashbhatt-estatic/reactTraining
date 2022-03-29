@@ -4,9 +4,17 @@ import {
 
 const initialState = {
   employees: [
-    { id: 1, employeeName: 'Employee 1', employeeDepartment: '.NET Team' },
-    { id: 2, employeeName: 'Employee 2', employeeDepartment: 'Mobile Team' },
-    { id: 3, employeeName: 'Employee 3', employeeDepartment: 'Design Team' },
+    {
+      id: 1,
+      firstName: 'Yash',
+      lastName: 'Bhatt',
+      email: 'yash.bhatt@estatic-infotech.com',
+      department: 'IT',
+      gender: 'male',
+      city: 'Keshod',
+      state: 'Gujrat',
+      country: 'India',
+    },
   ],
 };
 
@@ -27,8 +35,8 @@ const userReducer = (state = initialState, action) => {
         employees: state.employees.map((content) => (content.id === action.payload.id
           ? {
             ...content,
-            employeeName: action.payload.employeeName,
-            employeeDepartment: action.payload.employeeDepartment,
+            firstName: action.payload.firstName,
+            lastName: action.payload.lastName,
           }
           : content)),
       };

@@ -7,13 +7,13 @@ import {
   editEmployee,
   deleteEmployee,
 } from '../../redux/Actions/userAction';
-import { startLoader, stopLoader } from '../../redux/Actions/commonAction';
+import { startLoader } from '../../redux/Actions/commonAction';
 
 function CrudUser() {
   const [user, setUser] = useState({
     id: 0,
-    employeeName: '',
-    employeeDepartment: '',
+    firstName: '',
+    department: '',
   });
   const { employees } = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
@@ -21,24 +21,24 @@ function CrudUser() {
   const clearData = () => {
     setUser({
       id: 0,
-      employeeName: '',
-      employeeDepartment: '',
+      firstName: '',
+      department: '',
     });
   };
 
   const submitData = () => {
-    if (user.employeeName && user.employeeDepartment && !user.id) {
+    if (user.firstName && user.department && !user.id) {
       const newEmployee = {
         id: Math.floor(Math.random() * (999 - 100 + 1) + 100),
-        employeeName: user.employeeName,
-        employeeDepartment: user.employeeDepartment,
+        firstName: user.firstName,
+        department: user.department,
       };
       dispatch(addEmployee(newEmployee));
-    } else if (user.employeeName && user.employeeDepartment && user.id) {
+    } else if (user.firstName && user.department && user.id) {
       const updatedDetails = {
         id: user.id,
-        employeeName: user.employeeName,
-        employeeDepartment: user.employeeDepartment,
+        firstName: user.firstName,
+        department: user.department,
       };
 
       dispatch(editEmployee(updatedDetails));
@@ -53,8 +53,8 @@ function CrudUser() {
     setUser((prevState) => ({
       ...prevState,
       id: data.id,
-      employeeName: data.employeeName,
-      employeeDepartment: data.employeeDepartment,
+      firstName: data.firstName,
+      department: data.department,
     }));
   };
 
@@ -68,23 +68,20 @@ function CrudUser() {
   const handleNameChange = (e) => {
     setUser((prevState) => ({
       ...prevState,
-      employeeName: e.target.value,
+      firstName: e.target.value,
     }));
   };
 
   const handleDepartmentChange = (e) => {
     setUser((prevState) => ({
       ...prevState,
-      employeeDepartment: e.target.value,
+      department: e.target.value,
     }));
   };
 
   useEffect(() => {
     dispatch(startLoader());
     dispatch(getEmployee());
-    setTimeout(() => {
-      dispatch(stopLoader());
-    }, 3000);
   }, []);
 
   return (
@@ -97,7 +94,7 @@ function CrudUser() {
           Employee Name :
           <input
             onChange={handleNameChange}
-            value={user.employeeName}
+            value={user.firstName}
             type="text"
             placeholder="Employee Name"
           />
@@ -105,7 +102,7 @@ function CrudUser() {
           Employee Department :
           <input
             onChange={handleDepartmentChange}
-            value={user.employeeDepartment}
+            value={user.department}
             type="text"
             placeholder="Employee Department"
           />
@@ -141,8 +138,8 @@ function CrudUser() {
                 && employees.map((data, index) => (
                   <tr key={index + 1}>
                     <td>{index + 1}</td>
-                    <td>{data.employeeName}</td>
-                    <td>{data.employeeDepartment}</td>
+                    <td>{data.firstName}</td>
+                    <td>{data.department}</td>
                     <td>
                       <button type="button" onClick={() => editDetails(data)}>
                         EDIT

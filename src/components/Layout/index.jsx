@@ -1,21 +1,21 @@
-import React, { PureComponent } from 'react';
+import { useSelector } from 'react-redux';
 import { Outlet } from 'react-router-dom';
+import Loader from '../Loader/loader';
 import Footer from './Footer';
 import Header from './Header';
 
-class Layout extends PureComponent {
-  render() {
-    return (
-      <>
-        <Header />
-        <div className="bg-dark text-white" style={{ minHeight: '800px' }}>
-          <h1 className="text-center">Welcome to the page</h1>
-          <Outlet />
-        </div>
-        <Footer />
-      </>
-    );
-  }
+function Layout() {
+  const { loading } = useSelector((state) => state.commonReducer);
+  return (
+    <>
+      <Header />
+      <div className="bg-dark text-white" style={{ minHeight: '800px' }}>
+        <h1 className="text-center">Welcome to the page</h1>
+        {loading ? <Loader /> : <Outlet />}
+      </div>
+      <Footer />
+    </>
+  );
 }
 
 export default Layout;

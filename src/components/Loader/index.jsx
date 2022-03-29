@@ -1,7 +1,6 @@
 /* eslint-disable react/destructuring-assignment */
 import { Component } from 'react';
 import loader from './assets/loader.svg';
-import './assets/loader.scss';
 
 const Loader = (ComposedComponent) => class extends Component {
   constructor() {

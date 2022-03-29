@@ -8,6 +8,7 @@ import SignupForm from '../pages/Form';
 import IpRouting from '../pages/InputRouting';
 import Layout from '../components/Layout';
 import CrudUser from '../pages/CRUD_User';
+import AxiosUserCrud from '../pages/Axios';
 
 function AppRoutes() {
   return (
@@ -22,6 +23,7 @@ function AppRoutes() {
         <Route path="/Form" element={<SignupForm />} />
         <Route path="/IpRouting" element={<IpRouting />} />
         <Route path="/UserCrud" element={<CrudUser />} />
+        <Route path="/AxiosUserCrud" element={<AxiosUserCrud />} />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>
