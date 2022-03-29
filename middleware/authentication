@@ -1,0 +1,27 @@
+var jwt = require('jsonwebtoken');
+
+function checkJwtAuthentication(req, res, next) {
+    if (req.headers && req.headers.authorization) {
+        jwt.verify(req.headers.authorization, 'secret', function(err, decoded) {
+            if (err) {
+                return res.status(401).json({
+                    success: false,
+                    error: true,
+                    data: Array(),
+                    msg: "Failed to authenticate token."
+                });
+            }
+            return next();
+
+        });
+    } else {
+        return res.status(401).json({
+            success: true,
+            error: false,
+            data: Array(),
+            msg: "No token provided."
+        });
+    }
+}
+
+module.exports = checkJwtAuthentication;
