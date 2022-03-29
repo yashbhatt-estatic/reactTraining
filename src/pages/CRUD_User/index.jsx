@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import './style.scss';
 import {
   getEmployee,
@@ -9,12 +9,16 @@ import {
   deleteEmployee,
 } from '../../redux/Actions/user_action';
 
-function crudUser(props) {
+function crudUser() {
   const [user, setUser] = useState({
     id: 0,
     employeeName: '',
     employeeDepartment: '',
   });
+  const { employees } = useSelector((state) => state);
+  console.log(employees);
+
+  const dispatch = useDispatch();
 
   const clearData = () => {
     setUser({
@@ -31,7 +35,7 @@ function crudUser(props) {
         employeeName: user.employeeName,
         employeeDepartment: user.employeeDepartment,
       };
-      props.addEmployee(newEmployee);
+      dispatch(addEmployee(newEmployee));
     } else if (user.employeeName && user.employeeDepartment && user.id) {
       const updatedDetails = {
         id: user.id,
@@ -39,7 +43,7 @@ function crudUser(props) {
         employeeDepartment: user.employeeDepartment,
       };
 
-      props.editEmployee(updatedDetails);
+      dispatch(editEmployee(updatedDetails));
     } else {
       alert('Enter Employee Details.');
     }
@@ -59,7 +63,7 @@ function crudUser(props) {
   const deleteEmployeeUser = (id) => {
     clearData();
     if (window.confirm('Are you sure?')) {
-      props.deleteEmployee(id);
+      dispatch(deleteEmployee(id));
     }
   };
 
@@ -78,7 +82,7 @@ function crudUser(props) {
   };
 
   useEffect(() => {
-    props.getEmployee();
+    dispatch(getEmployee());
   }, []);
 
   return (
@@ -131,8 +135,8 @@ function crudUser(props) {
               </tr>
             </thead>
             <tbody>
-              {props.employees
-                && props.employees.map((data, index) => (
+              {employees
+                && employees.map((data, index) => (
                   <tr key={index + 1}>
                     <td>{index + 1}</td>
                     <td>{data.employeeName}</td>
@@ -164,13 +168,4 @@ crudUser.propTypes = {
   deleteEmployee: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  employees: state.employees,
-});
-
-export default connect(mapStateToProps, {
-  getEmployee,
-  addEmployee,
-  editEmployee,
-  deleteEmployee,
-})(crudUser);
+export default crudUser;
