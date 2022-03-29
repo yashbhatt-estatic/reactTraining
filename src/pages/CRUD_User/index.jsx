@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './style.scss';
@@ -7,17 +6,16 @@ import {
   addEmployee,
   editEmployee,
   deleteEmployee,
-} from '../../redux/Actions/user_action';
+} from '../../redux/Actions/userAction';
+import { startLoader, stopLoader } from '../../redux/Actions/commonAction';
 
-function crudUser() {
+function CrudUser() {
   const [user, setUser] = useState({
     id: 0,
     employeeName: '',
     employeeDepartment: '',
   });
-  const { employees } = useSelector((state) => state);
-  console.log(employees);
-
+  const { employees } = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
 
   const clearData = () => {
@@ -82,7 +80,11 @@ function crudUser() {
   };
 
   useEffect(() => {
+    dispatch(startLoader());
     dispatch(getEmployee());
+    setTimeout(() => {
+      dispatch(stopLoader());
+    }, 3000);
   }, []);
 
   return (
@@ -161,11 +163,4 @@ function crudUser() {
   );
 }
 
-crudUser.propTypes = {
-  getEmployee: PropTypes.func.isRequired,
-  addEmployee: PropTypes.func.isRequired,
-  editEmployee: PropTypes.func.isRequired,
-  deleteEmployee: PropTypes.func.isRequired,
-};
-
-export default crudUser;
+export default CrudUser;

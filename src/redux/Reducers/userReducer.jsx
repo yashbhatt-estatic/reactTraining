@@ -1,4 +1,8 @@
-const initialstate = {
+import {
+  GET_EMPLOYEE, ADD_EMPLOYEE, EDIT_EMPLOYEE, DELETE_EMPLOYEE,
+} from '../actionTypes';
+
+const initialState = {
   employees: [
     { id: 1, employeeName: 'Employee 1', employeeDepartment: '.NET Team' },
     { id: 2, employeeName: 'Employee 2', employeeDepartment: 'Mobile Team' },
@@ -6,18 +10,18 @@ const initialstate = {
   ],
 };
 
-const reducer = (state = initialstate, action) => {
+const userReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'GET_EMPLOYEE':
+    case GET_EMPLOYEE:
       return {
         ...state,
       };
-    case 'ADD_EMPLOYEE':
+    case ADD_EMPLOYEE:
       return {
         ...state,
         employees: state.employees.concat(action.payload),
       };
-    case 'EDIT_EMPLOYEE':
+    case EDIT_EMPLOYEE:
       return {
         ...state,
         employees: state.employees.map((content) => (content.id === action.payload.id
@@ -28,7 +32,7 @@ const reducer = (state = initialstate, action) => {
           }
           : content)),
       };
-    case 'DELETE_EMPLOYEE':
+    case DELETE_EMPLOYEE:
       return {
         ...state,
         employees: state.employees.filter((item) => item.id !== action.payload),
@@ -38,4 +42,4 @@ const reducer = (state = initialstate, action) => {
   }
 };
 
-export default reducer;
+export default userReducer;
