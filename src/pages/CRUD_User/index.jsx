@@ -7,7 +7,6 @@ import {
   editEmployee,
   deleteEmployee,
 } from '../../redux/Actions/userAction';
-import { startLoader } from '../../redux/Actions/commonAction';
 
 function CrudUser() {
   const [user, setUser] = useState({
@@ -80,7 +79,6 @@ function CrudUser() {
   };
 
   useEffect(() => {
-    dispatch(startLoader());
     dispatch(getEmployee());
   }, []);
 

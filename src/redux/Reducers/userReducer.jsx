@@ -1,11 +1,12 @@
+/* eslint-disable no-underscore-dangle */
 import {
-  GET_EMPLOYEE, ADD_EMPLOYEE, EDIT_EMPLOYEE, DELETE_EMPLOYEE,
+  GET_EMPLOYEE, ADD_EMPLOYEE, EDIT_EMPLOYEE, DELETE_EMPLOYEE, GET_EMPLOYEE_BY_ID,
 } from '../actionTypes';
 
 const initialState = {
   employees: [
     {
-      id: 1,
+      _id: 1,
       firstName: 'Yash',
       lastName: 'Bhatt',
       email: 'yash.bhatt@estatic-infotech.com',
@@ -16,6 +17,7 @@ const initialState = {
       country: 'India',
     },
   ],
+  employeeById: [],
 };
 
 const userReducer = (state = initialState, action) => {
@@ -23,6 +25,12 @@ const userReducer = (state = initialState, action) => {
     case GET_EMPLOYEE:
       return {
         ...state,
+        employees: action.payload,
+      };
+    case GET_EMPLOYEE_BY_ID:
+      return {
+        ...state,
+        employeeById: action.payload,
       };
     case ADD_EMPLOYEE:
       return {
@@ -32,18 +40,16 @@ const userReducer = (state = initialState, action) => {
     case EDIT_EMPLOYEE:
       return {
         ...state,
-        employees: state.employees.map((content) => (content.id === action.payload.id
+        employees: state.employees.map((content) => (content._id === action.payload._id
           ? {
-            ...content,
-            firstName: action.payload.firstName,
-            lastName: action.payload.lastName,
+            ...action.payload,
           }
           : content)),
       };
     case DELETE_EMPLOYEE:
       return {
         ...state,
-        employees: state.employees.filter((item) => item.id !== action.payload),
+        employees: state.employees.filter((item) => item._id !== action.payload._id),
       };
     default:
       return state;
