@@ -1,5 +1,5 @@
 var userServices = require('../services/user.services');
-var nodeMail = require('../helper/helperFun');
+// var nodeMail = require('../helper/helperFun');
 
 const getUser = async(req, res) => {
     try {
@@ -30,7 +30,7 @@ const getUserById = async(req, res) => {
                 success: true,
                 error: false,
                 data: result,
-                msg: result === null ? "User data fetched successfully." : "User not found."
+                msg: result !== null ? "User data fetched successfully." : "User not found."
             });
         }
     } catch (err) {
@@ -46,12 +46,12 @@ const getUserById = async(req, res) => {
 const createUser = async(req, res) => {
     try {
         const result = await userServices.createUser(req);
-        nodeMail.contact(result.email);
+        // nodeMail.contact(result.email);
         return res.status(200).json({
             success: true,
             error: false,
             data: result,
-            msg: result === null ? "Data Registered successfully." : "User already exists."
+            msg: result !== null ? "Data Registered successfully." : "User already exists."
         });
     } catch (err) {
         return res.status(500).json({
@@ -71,7 +71,7 @@ const updateUser = async(req, res) => {
             success: true,
             error: false,
             data: result,
-            msg: result === null ? "User Updated successfully." : "User not found."
+            msg: result !== null ? "User Updated successfully." : "User not found."
         });
     } catch (err) {
         return res.status(500).json({
@@ -90,7 +90,7 @@ const deleteUser = async(req, res) => {
             success: true,
             error: false,
             data: result,
-            msg: result === null ? "User Deleted successfully." : "User not found."
+            msg: result !== null ? "User Deleted successfully." : "User not found."
         });
     } catch (err) {
         return res.status(500).json({

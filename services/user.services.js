@@ -23,7 +23,7 @@ const createUser = async(req) => {
 
 const getUser = async() => {
     return new Promise((resolve, reject) => {
-        User.find({ is_delete: false }, { first_name: 1, last_name: 1, email: 1, department: 1, gender: 1, state: 1, country: 1 }).then((result) => {
+        User.find({ is_delete: false }).then((result) => {
             return resolve(result);
         }).catch((err) => {
             return reject(err);
@@ -35,7 +35,7 @@ const getUser = async() => {
 const getUserById = async(req) => {
     return new Promise((resolve, reject) => {
         var id = req.params.id;
-        User.find({ is_delete: false, _id: id }, { first_name: 1, last_name: 1, email: 1, department: 1, gender: 1, state: 1, country: 1 }).then((result) => {
+        User.find({ _id: id }).then((result) => {
             return resolve(result);
         }).catch((err) => {
             return reject(err);
@@ -48,7 +48,8 @@ const updateUser = async(req) => {
     return new Promise((resolve, reject) => {
         var id = req.params.id;
         var user = req.body;
-        User.findOneAndUpdate({ _id: id }, user).then((result) => {
+        User.findOneAndUpdate({ _id: id }, user, {new: true}).then((result) => {
+            console.log('result', result);
             return resolve(result);
         }).catch((err) => {
             return reject(err);
