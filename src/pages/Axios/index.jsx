@@ -125,7 +125,7 @@ function AxiosUserCrud() {
     axios
       .delete(`${process.env.REACT_APP_BASE_URL}/users/${user.id}`)
       .then((res) => {
-        dispatch(deleteEmployee(res.data.data.result));
+        dispatch(deleteEmployee(res.data.data.result._id));
         setUser(res.data.data.result);
         handleCloseAlert();
       })

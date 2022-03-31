@@ -49,7 +49,7 @@ const userReducer = (state = initialState, action) => {
     case DELETE_EMPLOYEE:
       return {
         ...state,
-        employees: state.employees.filter((item) => item._id !== action.payload._id),
+        employees: state.employees.filter((item) => item._id !== action.payload),
       };
     default:
       return state;

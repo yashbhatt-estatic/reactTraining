@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './style.scss';
@@ -10,7 +11,7 @@ import {
 
 function CrudUser() {
   const [user, setUser] = useState({
-    id: 0,
+    _id: 0,
     firstName: '',
     department: '',
   });
@@ -19,30 +20,28 @@ function CrudUser() {
 
   const clearData = () => {
     setUser({
-      id: 0,
+      _id: 0,
       firstName: '',
       department: '',
     });
   };
 
   const submitData = () => {
-    if (user.firstName && user.department && !user.id) {
+    if (user.firstName && user.department && !user._id) {
       const newEmployee = {
-        id: Math.floor(Math.random() * (999 - 100 + 1) + 100),
+        _id: Math.floor(Math.random() * (999 - 100 + 1) + 100),
         firstName: user.firstName,
         department: user.department,
       };
       dispatch(addEmployee(newEmployee));
-    } else if (user.firstName && user.department && user.id) {
+    } else {
       const updatedDetails = {
-        id: user.id,
+        _id: user._id,
         firstName: user.firstName,
         department: user.department,
       };
 
       dispatch(editEmployee(updatedDetails));
-    } else {
-      alert('Enter Employee Details.');
     }
 
     clearData();
@@ -51,7 +50,7 @@ function CrudUser() {
   const editDetails = (data) => {
     setUser((prevState) => ({
       ...prevState,
-      id: data.id,
+      _id: data._id,
       firstName: data.firstName,
       department: data.department,
     }));
@@ -79,7 +78,7 @@ function CrudUser() {
   };
 
   useEffect(() => {
-    dispatch(getEmployee());
+    dispatch(getEmployee([]));
   }, []);
 
   return (
@@ -106,7 +105,7 @@ function CrudUser() {
           />
           <br />
           <div>
-            {user.id ? (
+            {user._id ? (
               <button type="button" onClick={submitData}>
                 UPDATE
               </button>
@@ -144,7 +143,7 @@ function CrudUser() {
                       </button>
                     </td>
                     <td>
-                      <button type="button" onClick={() => deleteEmployeeUser(data.id)}>
+                      <button type="button" onClick={() => deleteEmployeeUser(data._id)}>
                         DELETE
                       </button>
                     </td>
