@@ -1,0 +1,19 @@
+.table {
+    background-color: white;
+    thead {
+        tr{
+            th{
+                background-color: darkgray;
+                font-size: 15px;
+                color: brown;
+            }
+        }
+    }
+    tbody {
+        tr{
+            th, td{
+                background-color: bisque;
+            }
+        }
+    }
+}
