@@ -1,0 +1,23 @@
+.userCrud{
+    
+    table {
+        margin-top: 3%;
+        text-align: center;
+        width: 70%;
+        margin: 0 auto;
+        border-collapse: collapse;
+
+        td, th {
+            padding: 10px;
+            border: white 1px solid;
+        }
+    }
+
+    button {
+        background-color: darkgray;
+        padding: 10px;
+        width: 150px;
+        border: none;
+        border-radius: 10px;
+    }
+}

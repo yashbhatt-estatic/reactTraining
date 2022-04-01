@@ -7,6 +7,7 @@ import QueryParameter from '../pages/Query Parameter';
 import SignupForm from '../pages/Form';
 import IpRouting from '../pages/InputRouting';
 import Layout from '../components/Layout';
+import CrudUser from '../pages/CRUD_User';
 
 function AppRoutes() {
   return (
@@ -20,6 +21,7 @@ function AppRoutes() {
         </Route>
         <Route path="/Form" element={<SignupForm />} />
         <Route path="/IpRouting" element={<IpRouting />} />
+        <Route path="/UserCrud" element={<CrudUser />} />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>
