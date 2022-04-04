@@ -19,7 +19,7 @@ export default function QueryParameter() {
   const [searchParams] = useSearchParams();
   const params = Object.fromEntries([...searchParams]);
   return (
-    <Container className="bg-light border mx-auto w-50 text-dark">
+    <Container className="bg-light border mx-auto text-dark">
       <Table className="table">
         <TableHead>
           <TableRow>

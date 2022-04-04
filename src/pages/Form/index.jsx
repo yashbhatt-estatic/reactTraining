@@ -183,7 +183,6 @@ function SignupForm() {
             <Form.Label>Department</Form.Label>
             <Form.Select
               type="select"
-              defaultValue="male"
               value={formik.values.department}
               onChange={formik.handleChange}
               id="department"

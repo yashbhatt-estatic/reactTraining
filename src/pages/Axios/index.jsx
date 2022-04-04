@@ -201,31 +201,39 @@ function AxiosUserCrud() {
     employeeById !== [] ? setEmployee(employeeById) : setEmployee(employees);
   };
   return (
-    <div className="userCrud">
+    <Container className="userCrud px-5">
       <header>
         <h1 className="text-center mt-3">CRUD opeartions for Employee Module</h1>
       </header>
-      <div>
-        <Container className="card d-flex flex-row mx-auto my-3 p-5">
-          <Button className="mx-3" variant="primary" onClick={addUser}>
-            Add User
-          </Button>
-          <Button className="mx-3" variant="primary" onClick={allUserData}>
-            Show All Users
-          </Button>
-          <select
-            className="mx-3 form-select form-select-md"
-            id="id"
-            name="id"
-            onChange={onUserChange}
-          >
-            <option value="all" defaultValue>
-              Select User
-            </option>
-            {employees.map((data) => (
-              <option value={data._id}>{data.firstName}</option>
-            ))}
-          </select>
+      <Container>
+        <Container className="card mx-auto my-3 p-5">
+          <Row>
+            <Col md="12" lg="4">
+              <Button className="my-2" variant="primary" onClick={addUser}>
+                Add User
+              </Button>
+            </Col>
+            <Col md="12" lg="4">
+              <Button className="my-2" variant="primary" onClick={allUserData}>
+                Show All Users
+              </Button>
+            </Col>
+            <Col md="12" lg="4">
+              <select
+                className="my-2 form-select form-select-md"
+                id="id"
+                name="id"
+                onChange={onUserChange}
+              >
+                <option value="all" defaultValue>
+                  Select User
+                </option>
+                {employees.map((data) => (
+                  <option value={data._id}>{data.firstName}</option>
+                ))}
+              </select>
+            </Col>
+          </Row>
         </Container>
         <Modal show={showAlert} onHide={handleCloseAlert}>
           <Modal.Header closeButton>
@@ -233,10 +241,10 @@ function AxiosUserCrud() {
           </Modal.Header>
           <Modal.Body>Are you sure you want to delete!</Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={handleCloseAlert}>
+            <Button variant="secondary" className="my-2" onClick={handleCloseAlert}>
               Close
             </Button>
-            <Button variant="primary" onClick={handleDelete}>
+            <Button variant="primary" className="my-2" onClick={handleDelete}>
               Save Changes
             </Button>
           </Modal.Footer>
@@ -320,13 +328,12 @@ function AxiosUserCrud() {
                   </Col>
                   <Col md="12" lg="3">
                     <RadioGroup
-                      defaultValue="male"
                       value={formik.values.gender}
                       onChange={formik.handleChange}
                       name="gender"
                       id="gender"
                     >
-                      <FormControlLabel value="male" control={<Radio />} label="Male" />
+                      <FormControlLabel defaultChecked value="male" control={<Radio />} label="Male" />
                       <FormControlLabel value="female" control={<Radio />} label="Female" />
                       <FormControlLabel value="other" control={<Radio />} label="Other" />
                     </RadioGroup>
@@ -393,17 +400,16 @@ function AxiosUserCrud() {
                   <Col md="12" lg="3">
                     <Form.Select
                       type="select"
-                      defaultValue="male"
                       value={formik.values.country}
                       onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
+                      onBlur={formik.setFieldTouched}
                       id="country"
                       name="country"
                     >
-                      <option value=" ">Select Country</option>
-                      <option value="MEAN">India</option>
-                      <option value="MERN">US</option>
-                      <option value="Full-Stack">Russia</option>
+                      <option value=" " defaultChecked>Select Country</option>
+                      <option value="India">India</option>
+                      <option value="US">US</option>
+                      <option value="Russia">Russia</option>
                     </Form.Select>
                   </Col>
                 </Row>
@@ -420,7 +426,7 @@ function AxiosUserCrud() {
                   Save changes
                 </Button>
               )}
-              <Button type="reset" variant="secondary" onClick={formik.resetForm}>
+              <Button type="reset" className="my-2" variant="secondary" onClick={formik.resetForm}>
                 Reset
               </Button>
             </Modal.Footer>
@@ -515,7 +521,7 @@ function AxiosUserCrud() {
                                 </Button>
                               </Col>
                               <Col md="12" lg="6">
-                                <Button type="button" onClick={() => handleShowAlert(data._id)}>
+                                <Button type="button" className="my-2" onClick={() => handleShowAlert(data._id)}>
                                   DELETE
                                 </Button>
                               </Col>
@@ -529,8 +535,8 @@ function AxiosUserCrud() {
               ))
             : null}
         </div>
-      </div>
-    </div>
+      </Container>
+    </Container>
   );
 }
 
