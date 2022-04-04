@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 function NotFound() {
   const navigate = useNavigate();
 
-  useEffect(() => (navigate('/NotFound')), [Button]);
+  useEffect(() => (navigate('/notFound')), [Button]);
   return (
     <div className="p-5">
       <h1>404- Page not Found</h1>

@@ -52,14 +52,15 @@ function AxiosUserCrud() {
       country: '',
     },
     validationSchema: Yup.object({
-      firstName: Yup.string().max(15, 'Must be 15 characters or less').required('Required'),
-      lastName: Yup.string().max(20, 'Must be 20 characters or less').required('Required'),
-      email: Yup.string().email('Invalid email address').required('Required'),
-      gender: Yup.string().required('Required'),
-      department: Yup.string().required('Required'),
+      firstName: Yup.string().matches(/^[a-zA-Z\s]+$/, 'Only alphabets are allowed for this field ').max(15, 'Must be 15 characters or less').required('First name is Required'),
+      lastName: Yup.string().matches(/^[a-zA-Z\s]+$/, 'Only alphabets are allowed for this field ').max(20, 'Must be 20 characters or less').required('Last name is Required'),
+      email: Yup.string().email('Invalid email address').required('Email is Required'),
+      gender: Yup.string().required('Gender is Required'),
+      department: Yup.string().required('Department is Required'),
     }),
-    onSubmit: (values) => {
+    onSubmit: (values, event) => {
       if (!user.id) {
+        event.preventDefault();
         axios
           .post(`${process.env.REACT_APP_BASE_URL}/users`, values)
           .then((res) => {
@@ -75,10 +76,16 @@ function AxiosUserCrud() {
             alert(err.response.data.msg);
           });
       } else if (user.id) {
+        event.preventDefault();
         axios
           .patch(`${process.env.REACT_APP_BASE_URL}/users/${user.id}`, values)
           .then((res) => {
             dispatch(editEmployee({ ...res.data.data }));
+          }).then(() => {
+            setTimeout(() => {
+              handleClose();
+              formik.resetForm();
+            }, 3000);
           })
           .catch((err) => {
             alert(err.response.data.msg);
@@ -141,11 +148,11 @@ function AxiosUserCrud() {
         dispatch(getEmployee(res.data.data));
         setUser(res.data.data);
         setCard(true);
+        setEmployee(employees);
       })
       .catch((err) => {
         alert(err.response.data.msg);
       });
-    setEmployee(employees);
   };
 
   useEffect(() => {
@@ -154,12 +161,21 @@ function AxiosUserCrud() {
 
   useEffect(() => {
     employeeById !== [] ? setEmployee(employeeById) : setEmployee(employees);
+  }, [employees]);
+
+  useEffect(() => {
+    employeeById !== [] ? setEmployee(employeeById) : setEmployee(employees);
   }, [employeeById]);
+
+  const addUser = () => {
+    formik.resetForm();
+    setUser({});
+    handleShow();
+  };
 
   const onUserChange = (event) => {
     if (event.target.value === 'all') {
       dispatch(getEmployeeById([]));
-      // setCard(false);
     } else {
       axios
         .get(`${process.env.REACT_APP_BASE_URL}/users/${event.target.value}`)
@@ -181,8 +197,8 @@ function AxiosUserCrud() {
         <h1 className="text-center mt-3">CRUD opeartions for Employee Module</h1>
       </header>
       <div>
-        <div className="card w-50 d-flex flex-row mx-auto my-3 p-5">
-          <Button className="mx-3" variant="primary" onClick={handleShow}>
+        <Container className="card d-flex flex-row mx-auto my-3 p-5">
+          <Button className="mx-3" variant="primary" onClick={addUser}>
             Add User
           </Button>
           <Button className="mx-3" variant="primary" onClick={allUserData}>
@@ -201,10 +217,10 @@ function AxiosUserCrud() {
               <option value={data._id}>{data.firstName}</option>
             ))}
           </select>
-        </div>
+        </Container>
         <Modal show={showAlert} onHide={handleCloseAlert}>
           <Modal.Header closeButton>
-            <Modal.Title>Modal heading</Modal.Title>
+            <Modal.Title>DELETE User</Modal.Title>
           </Modal.Header>
           <Modal.Body>Are you sure you want to delete!</Modal.Body>
           <Modal.Footer>
@@ -390,7 +406,7 @@ function AxiosUserCrud() {
                   Save changes
                 </Button>
               )}
-              <Button type="reset" onClick={formik.resetForm}>
+              <Button type="reset" variant="secondary" onClick={formik.resetForm}>
                 Reset
               </Button>
             </Modal.Footer>

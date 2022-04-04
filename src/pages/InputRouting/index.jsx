@@ -106,7 +106,7 @@ function IpRouting() {
             value={formik.values.routes}
           />
         </div>
-        <Button type="submit" className="btn btn-primary">
+        <Button type="submit" className="btn btn-primary modal-dialog-centered">
           Submit
         </Button>
       </form>

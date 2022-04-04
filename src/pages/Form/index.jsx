@@ -1,12 +1,20 @@
+/* eslint-disable jsx-a11y/interactive-supports-focus */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import {
-  Checkbox, FormControlLabel, Radio, RadioGroup,
-} from '@mui/material';
 import './style.scss';
 import {
-  Button, Card, Col, Container, ListGroup, ListGroupItem, Row,
+  Button,
+  Card,
+  Col,
+  Container,
+  Form,
+  InputGroup,
+  ListGroup,
+  ListGroupItem,
+  Row,
+  Stack,
 } from 'react-bootstrap';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
@@ -28,193 +36,190 @@ function SignupForm() {
       password: '',
       confirmPassword: '',
       gender: 'male',
-      department: 'MEAN',
-      terms: true,
+      department: '',
+      terms: false,
     },
     validationSchema: Yup.object({
-      firstName: Yup.string().max(15, 'Must be 15 characters or less').required('Required'),
-      lastName: Yup.string().max(20, 'Must be 20 characters or less').required('Required'),
-      password: Yup.string().required('Required'),
+      firstName: Yup.string()
+        .matches(/^[a-zA-Z\s]+$/, 'Only alphabets are allowed for this field ')
+        .max(15, 'Must be 15 characters or less')
+        .required('First name isRequired'),
+      lastName: Yup.string()
+        .matches(/^[a-zA-Z\s]+$/, 'Only alphabets are allowed for this field ')
+        .max(20, 'Must be 20 characters or less')
+        .required('Last name is Required'),
+      password: Yup.string().required('Password is Required'),
       confirmPassword: Yup.string()
-        .required('Required')
+        .required('Password is Required')
         .oneOf([Yup.ref('password'), null], 'Passwords must match'),
-      email: Yup.string().email('Invalid email address').required('Required'),
-      gender: Yup.string().required('Required'),
+      email: Yup.string().email('Invalid email address').required('Email is Required'),
+      gender: Yup.string().required('Gender is Required'),
       terms: Yup.boolean().oneOf([true], 'You should accept terms & condition'),
-      department: Yup.string().required('Required'),
+      department: Yup.string().required('Department is Required'),
     }),
     onSubmit: (values) => {
       setData(values);
       setCard(true);
     },
   });
+
+  const resetForm = () => {
+    formik.resetForm();
+    setCard(false);
+  };
+
   return (
-    <Container className="bg-light border mx-auto w-50 p-4 text-dark">
-      <form onSubmit={formik.handleSubmit} className="form">
-        <Row>
-          <Col md="12" lg="3">
-            First Name :-
-            {' '}
-          </Col>
-          <Col md="12" lg="3">
-            <input
+    <Container className="bg-light border mx-auto w-50 p-4 text-dark text-start">
+      <Form onSubmit={formik.handleSubmit}>
+        <Row className="mb-3">
+          <Form.Group as={Col} md="4" lg="4" sm="12">
+            <Form.Label>First name</Form.Label>
+            <Form.Control
               id="firstName"
               name="firstName"
               type="text"
-              className="form-control"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.firstName}
+              isInvalid={!!formik.errors.firstName}
             />
-            {formik.touched.firstName && formik.errors.firstName ? (
-              <div className="error">{formik.errors.firstName}</div>
-            ) : null}
-          </Col>
-          <Col md="12" lg="3">
-            Last Name :-
-            {' '}
-          </Col>
-          <Col md="12" lg="3">
-            <input
+            <Form.Control.Feedback type="invalid">{formik.errors.firstName}</Form.Control.Feedback>
+          </Form.Group>
+          <Form.Group as={Col} md="4" lg="4" sm="12">
+            <Form.Label>Last name</Form.Label>
+            <Form.Control
               id="lastName"
               name="lastName"
               type="text"
-              className="form-control"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.lastName}
+              isInvalid={!!formik.errors.lastName}
             />
-            {formik.touched.lastName && formik.errors.lastName ? (
-              <div className="error">{formik.errors.lastName}</div>
-            ) : null}
-          </Col>
-        </Row>
-        <br />
-        <Row>
-          <Col md="12" lg="3">
-            Password :-
-            {' '}
-          </Col>
-          <Col md="12" lg="3">
-            <div className="form-control d-inline-flex p-1">
-              <input
-                id="password"
-                name="password"
-                type={showPass ? 'text' : 'password'}
-                className="border-0"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.password}
-              />
-              <button type="button" id="btn" onClick={password}>{showPass ? <RemoveRedEyeIcon /> : <VisibilityOffIcon />}</button>
-            </div>
-            {formik.touched.password && formik.errors.password ? (
-              <div className="error">{formik.errors.password}</div>
-            ) : null}
-          </Col>
-          <Col md="12" lg="3">
-            Confirm Password :-
-            {' '}
-          </Col>
-          <Col md="12" lg="3">
-            <input
-              id="confirmPassword"
-              name="confirmPassword"
-              type="password"
-              className="form-control"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.confirmPassword}
-            />
-            {formik.touched.confirmPassword && formik.errors.confirmPassword ? (
-              <div className="error">{formik.errors.confirmPassword}</div>
-            ) : null}
-          </Col>
-        </Row>
-        <br />
-        <Row>
-          <Col md="12" lg="3">
-            Email :-
-            {' '}
-          </Col>
-          <Col md="12" lg="3">
-            <input
+            <Form.Control.Feedback type="invalid">{formik.errors.lastName}</Form.Control.Feedback>
+          </Form.Group>
+          <Form.Group as={Col} md="4" lg="4" sm="12">
+            <Form.Label>Email</Form.Label>
+            <Form.Control
               id="email"
               name="email"
               type="email"
-              className="form-control"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.email}
+              isInvalid={!!formik.errors.email}
             />
-            {formik.touched.email && formik.errors.email ? <div className="error">{formik.errors.email}</div> : null}
-          </Col>
-          <Col md="12" lg="3">
-            Gender :-
-            {' '}
-          </Col>
-          <Col md="12" lg="3">
-            <RadioGroup
-              defaultValue="male"
-              value={formik.values.gender}
-              onChange={formik.handleChange}
-              name="gender"
-              id="gender"
-            >
-              <FormControlLabel value="male" control={<Radio />} label="Male" />
-              <FormControlLabel value="female" control={<Radio />} label="Female" />
-              <FormControlLabel value="other" control={<Radio />} label="Other" />
-            </RadioGroup>
-            {formik.touched.gender && formik.errors.gender ? (
-              <div className="error">{formik.errors.gender}</div>
-            ) : null}
-          </Col>
+            <Form.Control.Feedback type="invalid">{formik.errors.email}</Form.Control.Feedback>
+          </Form.Group>
         </Row>
-        <br />
-        <Row>
-          <Col md="12" lg="6">
-            <Checkbox
-              defaultChecked
-              name="terms"
-              id="terms"
+        <Row className="mb-3">
+          <Form.Group as={Col} sm="12" md="6" lg="6">
+            <Form.Label>Password</Form.Label>
+            <InputGroup>
+              <Form.Control
+                id="password"
+                name="password"
+                type={showPass ? 'text' : 'password'}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.password}
+                isInvalid={!!formik.errors.password}
+              />
+              <InputGroup.Text>
+                <span onClick={password} role="button">
+                  {showPass ? <RemoveRedEyeIcon /> : <VisibilityOffIcon />}
+                </span>
+              </InputGroup.Text>
+            </InputGroup>
+            <Form.Control.Feedback type="invalid">{formik.errors.password}</Form.Control.Feedback>
+          </Form.Group>
+          <Form.Group as={Col} sm="12" md="6" lg="6">
+            <Form.Label>Confirm Password</Form.Label>
+            <Form.Control
+              id="confirmPassword"
+              name="confirmPassword"
+              type="password"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
+              value={formik.values.confirmPassword}
+              isInvalid={!!formik.errors.confirmPassword}
             />
-            Accept terms & Condition
-            {formik.touched.terms && formik.errors.terms ? <div className="error">{formik.errors.terms}</div> : null}
-          </Col>
-          <Col md="12" lg="3">
-            Department :-
-            {' '}
-          </Col>
-          <Col md="12" lg="3">
-            <select
-              className="form-select form-select-md"
+            <Form.Control.Feedback type="invalid">
+              {formik.errors.confirmPassword}
+            </Form.Control.Feedback>
+          </Form.Group>
+        </Row>
+        <Row className="mb-3">
+          <Form.Group as={Col} md="6" sm="12" lg="6">
+            <Form.Label>Gender</Form.Label>
+            <Form.Check
+              defaultChecked
+              value={formik.values.gender}
+              type="radio"
+              label="Male"
+              onChange={formik.handleChange}
+              name="gender"
+              isInvalid={!!formik.errors.gender}
+            />
+            <Form.Check
+              value={formik.values.gender}
+              type="radio"
+              label="Female"
+              onChange={formik.handleChange}
+              name="gender"
+              isInvalid={!!formik.errors.gender}
+            />
+            <Form.Check
+              value={formik.values.gender}
+              type="radio"
+              label="Other"
+              onChange={formik.handleChange}
+              name="gender"
+              isInvalid={!!formik.errors.gender}
+            />
+            <Form.Control.Feedback type="invalid">{formik.errors.gender}</Form.Control.Feedback>
+          </Form.Group>
+          <Form.Group as={Col} md="6" sm="12" lg="6">
+            <Form.Label>Department</Form.Label>
+            <Form.Select
+              type="select"
+              defaultValue="male"
               value={formik.values.department}
+              onChange={formik.handleChange}
               id="department"
               name="department"
-              onChange={formik.handleChange}
+              isInvalid={!!formik.errors.department}
             >
-              <option value="MEAN">MEAN</option>
-              <option value="MERN">MERN</option>
+              <option value=" ">Select Department</option>
+              <option value="MEAN">Mean</option>
+              <option value="MERN">Mern</option>
               <option value="Full-Stack">Full-Stack</option>
-            </select>
-
-            {formik.touched.department && formik.errors.department ? (
-              <div className="error">{formik.errors.department}</div>
-            ) : null}
-          </Col>
+            </Form.Select>
+            <Form.Control.Feedback type="invalid">{formik.errors.department}</Form.Control.Feedback>
+          </Form.Group>
         </Row>
-        <br />
-        <Container className="col-6 text-center">
-          <Button className="me-md-2" type="submit">
+        <Form.Group className="mb-3" md="6" sm="12" lg="6">
+          <Form.Check
+            inline
+            required
+            type="checkbox"
+            name="terms"
+            value={formik.values.terms}
+            onChange={formik.handleChange}
+            isInvalid={!!formik.errors.terms}
+          />
+          <Form.Label>Agree to terms and conditions</Form.Label>
+        </Form.Group>
+        <Form.Control.Feedback type="invalid">{formik.errors.terms}</Form.Control.Feedback>
+        <Stack gap={2} className="stack">
+          <Button className="mx-auto" variant="primary" type="submit">
             Submit
           </Button>
-          <Button type="reset" onClick={formik.resetForm}>
+          <Button className="mx-auto" variant="outline-secondary" type="reset" onClick={resetForm}>
             Reset
           </Button>
-        </Container>
-      </form>
+        </Stack>
+      </Form>
       {card ? (
         <Card className="w-75 my-4 mx-auto card">
           <Row>

@@ -1,40 +1,24 @@
-import { Button } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Container, Nav, Navbar } from 'react-bootstrap';
 
 function Header() {
   return (
-    <nav className="navbar navbar-expand-md navbar-light sticky-top bg-light">
-      <div className="container">
-        <div className="header">
-          <ul className="navbar-nav">
-            <li className="nav-item">
-              <Button><Link className="text-decoration-none text-dark h5" to="/">Home</Link></Button>
-            </li>
-            <li className="nav-item">
-              <Button><Link className="text-decoration-none text-dark h5" to="/User">User</Link></Button>
-            </li>
-            <li className="nav-item">
-              <Button><Link className="text-decoration-none text-dark h5" to="/Counter">Counter</Link></Button>
-            </li>
-            <li className="nav-item">
-              <Button><Link className="text-decoration-none text-dark h5" to="/QueryParameter">Query-Parameter</Link></Button>
-            </li>
-            <li className="nav-item">
-              <Button><Link className="text-decoration-none text-dark h5" to="/Form">SignupForm</Link></Button>
-            </li>
-            <li className="nav-item">
-              <Button><Link className="text-decoration-none text-dark h5" to="/IpRouting">InputRouting</Link></Button>
-            </li>
-            <li className="nav-item">
-              <Button><Link className="text-decoration-none text-dark h5" to="/UserCrud">User-CRUD</Link></Button>
-            </li>
-            <li className="nav-item">
-              <Button><Link className="text-decoration-none text-dark h5" to="/AxiosUserCrud">Axios-User-CRUD</Link></Button>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+    <Navbar bg="light" expand="lg" fixed="top">
+      <Container>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="me-auto">
+            <Nav.Link className="text-dark" href="/">Home</Nav.Link>
+            <Nav.Link className="text-dark" href="/user">User</Nav.Link>
+            <Nav.Link className="text-dark" href="/counter">Counter</Nav.Link>
+            <Nav.Link className="text-dark" href="/queryParameter">QueryParameter</Nav.Link>
+            <Nav.Link className="text-dark" href="/form">SignupForm</Nav.Link>
+            <Nav.Link className="text-dark" href="/ipRouting">InputRouting</Nav.Link>
+            <Nav.Link className="text-dark" href="/userCrud">UserCRUD</Nav.Link>
+            <Nav.Link className="text-dark" href="/axiosUserCrud">AxiosUserCRUD</Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
   );
 }
 

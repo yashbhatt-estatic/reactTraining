@@ -4,19 +4,7 @@ import {
 } from '../actionTypes';
 
 const initialState = {
-  employees: [
-    {
-      _id: 1,
-      firstName: 'Yash',
-      lastName: 'Bhatt',
-      email: 'yash.bhatt@estatic-infotech.com',
-      department: 'IT',
-      gender: 'male',
-      city: 'Keshod',
-      state: 'Gujrat',
-      country: 'India',
-    },
-  ],
+  employees: [],
   employeeById: [],
 };
 

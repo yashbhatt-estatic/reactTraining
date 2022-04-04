@@ -15,15 +15,15 @@ function AppRoutes() {
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<Width />} />
-        <Route path="/User" element={<User />} />
-        <Route path="/Counter" element={<Counter />} />
-        <Route path="/QueryParameter" element={<QueryParameter />}>
+        <Route path="/user" element={<User />} />
+        <Route path="/counter" element={<Counter />} />
+        <Route path="/queryParameter" element={<QueryParameter />}>
           <Route path=":users" element={<QueryParameter />} />
         </Route>
-        <Route path="/Form" element={<SignupForm />} />
-        <Route path="/IpRouting" element={<IpRouting />} />
-        <Route path="/UserCrud" element={<CrudUser />} />
-        <Route path="/AxiosUserCrud" element={<AxiosUserCrud />} />
+        <Route path="/form" element={<SignupForm />} />
+        <Route path="/ipRouting" element={<IpRouting />} />
+        <Route path="/userCrud" element={<CrudUser />} />
+        <Route path="/axiosUserCrud" element={<AxiosUserCrud />} />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>

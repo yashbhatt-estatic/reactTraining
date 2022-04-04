@@ -3,6 +3,9 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './style.scss';
 import {
+  Button, Container, Stack, Table,
+} from 'react-bootstrap';
+import {
   getEmployee,
   addEmployee,
   editEmployee,
@@ -82,18 +85,19 @@ function CrudUser() {
   }, []);
 
   return (
-    <div className="userCrud">
+    <Container className="userCrud">
       <header>
         <h1 className="text-center mt-3">CRUD opeartions for Employee Module</h1>
       </header>
-      <div>
-        <div className="card w-50 mx-auto my-3 p-5">
+      <Container>
+        <Container className="card mx-auto my-3 p-5">
           Employee Name :
           <input
             onChange={handleNameChange}
             value={user.firstName}
             type="text"
             placeholder="Employee Name"
+            className="p-2"
           />
           <br />
           Employee Department :
@@ -102,58 +106,62 @@ function CrudUser() {
             value={user.department}
             type="text"
             placeholder="Employee Department"
+            className="p-2"
           />
           <br />
-          <div>
-            {user._id ? (
-              <button type="button" onClick={submitData}>
-                UPDATE
-              </button>
-            ) : (
-              <button type="button" onClick={submitData}>
-                ADD
-              </button>
-            )}
-            <button type="button" style={{ marginLeft: '15px' }} onClick={clearData}>
-              CLEAR
-            </button>
-          </div>
-        </div>
-        <div className="mt-5">
-          <table>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Depatment Name</th>
-                <th>Edit</th>
-                <th>Delete</th>
-              </tr>
-            </thead>
-            <tbody>
-              {employees
-                && employees.map((data, index) => (
+          <Container>
+            <Stack gap={2} className="stack">
+              {user._id ? (
+                <Button type="button" variant="primary" onClick={submitData}>
+                  UPDATE
+                </Button>
+              ) : (
+                <Button type="button" variant="primary" onClick={submitData}>
+                  ADD
+                </Button>
+              )}
+              <Button type="button" variant="outline-secondary" onClick={clearData}>
+                CLEAR
+              </Button>
+            </Stack>
+          </Container>
+        </Container>
+
+        {employees
+          && employees.map((data, index) => (
+            <Container className="mt-5">
+              <Table striped bordered hover size="lg" responsive="md">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Depatment Name</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                  </tr>
+                </thead>
+                <tbody>
                   <tr key={index + 1}>
                     <td>{index + 1}</td>
                     <td>{data.firstName}</td>
                     <td>{data.department}</td>
                     <td>
-                      <button type="button" onClick={() => editDetails(data)}>
+                      <Button type="button" onClick={() => editDetails(data)}>
                         EDIT
-                      </button>
+                      </Button>
                     </td>
                     <td>
-                      <button type="button" onClick={() => deleteEmployeeUser(data._id)}>
+                      <Button type="button" onClick={() => deleteEmployeeUser(data._id)}>
                         DELETE
-                      </button>
+                      </Button>
                     </td>
                   </tr>
-                ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
+                </tbody>
+              </Table>
+            </Container>
+          ))}
+      </Container>
+    </Container>
   );
 }
 
