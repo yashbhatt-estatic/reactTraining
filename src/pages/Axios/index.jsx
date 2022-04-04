@@ -7,6 +7,7 @@ import {
   Card,
   Col,
   Container,
+  Form,
   ListGroup,
   ListGroupItem,
   Modal,
@@ -52,8 +53,14 @@ function AxiosUserCrud() {
       country: '',
     },
     validationSchema: Yup.object({
-      firstName: Yup.string().matches(/^[a-zA-Z\s]+$/, 'Only alphabets are allowed for this field ').max(15, 'Must be 15 characters or less').required('First name is Required'),
-      lastName: Yup.string().matches(/^[a-zA-Z\s]+$/, 'Only alphabets are allowed for this field ').max(20, 'Must be 20 characters or less').required('Last name is Required'),
+      firstName: Yup.string()
+        .matches(/^[a-zA-Z\s]+$/, 'Only alphabets are allowed for this field ')
+        .max(15, 'Must be 15 characters or less')
+        .required('First name is Required'),
+      lastName: Yup.string()
+        .matches(/^[a-zA-Z\s]+$/, 'Only alphabets are allowed for this field ')
+        .max(20, 'Must be 20 characters or less')
+        .required('Last name is Required'),
       email: Yup.string().email('Invalid email address').required('Email is Required'),
       gender: Yup.string().required('Gender is Required'),
       department: Yup.string().required('Department is Required'),
@@ -66,7 +73,8 @@ function AxiosUserCrud() {
           .then((res) => {
             setUser(res.data.data);
             dispatch(addEmployee(res.data.data));
-          }).then(() => {
+          })
+          .then(() => {
             setTimeout(() => {
               handleClose();
               formik.resetForm();
@@ -81,7 +89,8 @@ function AxiosUserCrud() {
           .patch(`${process.env.REACT_APP_BASE_URL}/users/${user.id}`, values)
           .then((res) => {
             dispatch(editEmployee({ ...res.data.data }));
-          }).then(() => {
+          })
+          .then(() => {
             setTimeout(() => {
               handleClose();
               formik.resetForm();
@@ -382,15 +391,20 @@ function AxiosUserCrud() {
                     Country :-
                   </Col>
                   <Col md="12" lg="3">
-                    <input
-                      id="country"
-                      name="country"
-                      type="text"
-                      className="form-control"
+                    <Form.Select
+                      type="select"
+                      defaultValue="male"
+                      value={formik.values.country}
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
-                      value={formik.values.country}
-                    />
+                      id="country"
+                      name="country"
+                    >
+                      <option value=" ">Select Country</option>
+                      <option value="MEAN">India</option>
+                      <option value="MERN">US</option>
+                      <option value="Full-Stack">Russia</option>
+                    </Form.Select>
                   </Col>
                 </Row>
                 <br />
@@ -496,14 +510,14 @@ function AxiosUserCrud() {
                           <ListGroupItem>
                             <Row>
                               <Col md="12" lg="6">
-                                <button type="button" onClick={() => editDetails(data)}>
+                                <Button type="button" onClick={() => editDetails(data)}>
                                   EDIT
-                                </button>
+                                </Button>
                               </Col>
                               <Col md="12" lg="6">
-                                <button type="button" onClick={() => handleShowAlert(data._id)}>
+                                <Button type="button" onClick={() => handleShowAlert(data._id)}>
                                   DELETE
-                                </button>
+                                </Button>
                               </Col>
                             </Row>
                           </ListGroupItem>
