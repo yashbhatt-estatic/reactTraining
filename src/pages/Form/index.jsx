@@ -60,6 +60,7 @@ function SignupForm() {
     onSubmit: (values) => {
       setData(values);
       setCard(true);
+      formik.resetForm();
     },
   });
 

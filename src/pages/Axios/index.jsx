@@ -40,6 +40,39 @@ function AxiosUserCrud() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  const allUserData = () => {
+    axios
+      .get(`${process.env.REACT_APP_BASE_URL}/users`)
+      .then((res) => {
+        dispatch(getEmployee(res.data.data));
+        setUser(res.data.data);
+        setCard(true);
+        setEmployee(employees);
+      })
+      .catch((err) => {
+        alert(err.response.data.msg);
+      });
+  };
+
+  const onUserChange = (event) => {
+    if (event.target.value === 'all') {
+      dispatch(getEmployeeById([]));
+    } else {
+      axios
+        .get(`${process.env.REACT_APP_BASE_URL}/users/${event.target.value}`)
+        .then((res) => {
+          dispatch(getEmployeeById(res.data.data));
+          setUser(res.data.data);
+          setCard(true);
+        })
+        .catch((err) => {
+          alert(err.response.data.msg);
+        });
+    }
+
+    employeeById !== [] ? setEmployee(employeeById) : setEmployee(employees);
+  };
+
   const formik = useFormik({
     initialValues: {
       id: '',
@@ -65,17 +98,16 @@ function AxiosUserCrud() {
       gender: Yup.string().required('Gender is Required'),
       department: Yup.string().required('Department is Required'),
     }),
-    onSubmit: (values, event) => {
+    onSubmit: (values) => {
+      dispatch(getEmployeeById([]));
       if (!user.id) {
-        event.preventDefault();
         axios
           .post(`${process.env.REACT_APP_BASE_URL}/users`, values)
           .then((res) => {
             setUser(res.data.data);
             dispatch(addEmployee(res.data.data));
-          })
-          .then(() => {
             setTimeout(() => {
+              onUserChange({ target: { value: res.data.data._id } });
               handleClose();
               formik.resetForm();
             }, 3000);
@@ -84,14 +116,12 @@ function AxiosUserCrud() {
             alert(err.response.data.msg);
           });
       } else if (user.id) {
-        event.preventDefault();
         axios
           .patch(`${process.env.REACT_APP_BASE_URL}/users/${user.id}`, values)
           .then((res) => {
             dispatch(editEmployee({ ...res.data.data }));
-          })
-          .then(() => {
             setTimeout(() => {
+              onUserChange({ target: { value: res.data.data._id } });
               handleClose();
               formik.resetForm();
             }, 3000);
@@ -150,20 +180,6 @@ function AxiosUserCrud() {
       });
   };
 
-  const allUserData = () => {
-    axios
-      .get(`${process.env.REACT_APP_BASE_URL}/users`)
-      .then((res) => {
-        dispatch(getEmployee(res.data.data));
-        setUser(res.data.data);
-        setCard(true);
-        setEmployee(employees);
-      })
-      .catch((err) => {
-        alert(err.response.data.msg);
-      });
-  };
-
   useEffect(() => {
     allUserData();
   }, []);
@@ -181,44 +197,25 @@ function AxiosUserCrud() {
     setUser({});
     handleShow();
   };
-
-  const onUserChange = (event) => {
-    if (event.target.value === 'all') {
-      dispatch(getEmployeeById([]));
-    } else {
-      axios
-        .get(`${process.env.REACT_APP_BASE_URL}/users/${event.target.value}`)
-        .then((res) => {
-          dispatch(getEmployeeById(res.data.data));
-          setUser(res.data.data);
-          setCard(true);
-        })
-        .catch((err) => {
-          alert(err.response.data.msg);
-        });
-    }
-
-    employeeById !== [] ? setEmployee(employeeById) : setEmployee(employees);
-  };
   return (
     <Container className="userCrud px-5">
       <header>
         <h1 className="text-center mt-3">CRUD opeartions for Employee Module</h1>
       </header>
       <Container>
-        <Container className="card mx-auto my-3 p-5">
+        <Container className="card mx-auto my-3 p-5 text-center">
           <Row>
-            <Col md="12" lg="4">
+            <Col md="3" lg="4" sm="6">
               <Button className="my-2" variant="primary" onClick={addUser}>
                 Add User
               </Button>
             </Col>
-            <Col md="12" lg="4">
+            <Col md="3" lg="4" sm="6">
               <Button className="my-2" variant="primary" onClick={allUserData}>
                 Show All Users
               </Button>
             </Col>
-            <Col md="12" lg="4">
+            <Col md="6" lg="4" sm="12">
               <select
                 className="my-2 form-select form-select-md"
                 id="id"
@@ -333,7 +330,12 @@ function AxiosUserCrud() {
                       name="gender"
                       id="gender"
                     >
-                      <FormControlLabel defaultChecked value="male" control={<Radio />} label="Male" />
+                      <FormControlLabel
+                        defaultChecked
+                        value="male"
+                        control={<Radio />}
+                        label="Male"
+                      />
                       <FormControlLabel value="female" control={<Radio />} label="Female" />
                       <FormControlLabel value="other" control={<Radio />} label="Other" />
                     </RadioGroup>
@@ -406,7 +408,9 @@ function AxiosUserCrud() {
                       id="country"
                       name="country"
                     >
-                      <option value=" " defaultChecked>Select Country</option>
+                      <option value=" " defaultChecked>
+                        Select Country
+                      </option>
                       <option value="India">India</option>
                       <option value="US">US</option>
                       <option value="Russia">Russia</option>
@@ -437,91 +441,99 @@ function AxiosUserCrud() {
           {card
             ? employee
               && employee.map((data) => (
-                <Card className="w-75 my-4 mx-auto card">
+                <Card className="my-4 mx-5 card">
                   <Row>
                     <Col>
                       <Card.Body>
-                        <Card.Title>User</Card.Title>
+                        <Card.Title className="text-dark text-center">User Details</Card.Title>
                         <ListGroup className="list-group-flush">
                           <ListGroupItem>
                             <Row>
-                              <Col md="12" lg="3">
+                              <Col sm="6" md="3" lg="3" xs="6">
                                 First Name :-
                                 {' '}
                               </Col>
-                              <Col md="12" lg="3">
+                              <Col sm="6" md="3" lg="3" xs="6">
                                 {data.firstName}
                               </Col>
-                              <Col md="12" lg="3">
+                              <Col sm="6" md="4" lg="3" xs="6">
                                 Last Name :-
                               </Col>
-                              <Col md="12" lg="3">
+                              <Col sm="6" md="2" lg="3" xs="6">
                                 {data.lastName}
                               </Col>
                             </Row>
                           </ListGroupItem>
                           <ListGroupItem>
                             <Row>
-                              <Col md="12" lg="3">
+                              <Col sm="6" md="3" lg="3" xs="6">
                                 Email :-
                                 {' '}
                               </Col>
-                              <Col md="12" lg="3">
+                              <Col sm="6" md="3" lg="3" xs="6">
                                 <span className="overflow w-50">
-                                  <span>{data.email}</span>
+                                  <span className="me-2">{data.email}</span>
                                 </span>
                               </Col>
-                              <Col md="12" lg="3">
+                              <Col sm="6" md="4" lg="3" xs="6">
                                 Department :-
                               </Col>
-                              <Col md="12" lg="3">
+                              <Col sm="6" md="2" lg="3" xs="6">
                                 {data.department}
                               </Col>
                             </Row>
                           </ListGroupItem>
                           <ListGroupItem>
                             <Row>
-                              <Col md="12" lg="3">
+                              <Col sm="6" md="3" lg="3" xs="6">
                                 Gender :-
                                 {' '}
                               </Col>
-                              <Col md="12" lg="3">
+                              <Col sm="6" md="3" lg="3" xs="6">
                                 {data.gender}
                               </Col>
-                              <Col md="12" lg="3">
+                              <Col sm="6" md="2" lg="3" xs="6">
                                 City :-
                               </Col>
-                              <Col md="12" lg="3">
+                              <Col sm="6" md="4" lg="3" xs="6">
                                 {data.city}
                               </Col>
                             </Row>
                           </ListGroupItem>
                           <ListGroupItem>
                             <Row>
-                              <Col md="12" lg="3">
+                              <Col sm="6" md="3" lg="3" xs="6">
                                 State :-
                                 {' '}
                               </Col>
-                              <Col md="12" lg="3">
+                              <Col sm="6" md="3" lg="3" xs="6">
                                 {data.state}
                               </Col>
-                              <Col md="12" lg="3">
+                              <Col sm="6" md="4" lg="3" xs="6">
                                 Country :-
                               </Col>
-                              <Col md="12" lg="3">
+                              <Col sm="6" md="2" lg="3" xs="6">
                                 {data.country}
                               </Col>
                             </Row>
                           </ListGroupItem>
                           <ListGroupItem>
-                            <Row>
-                              <Col md="12" lg="6">
-                                <Button type="button" onClick={() => editDetails(data)}>
+                            <Row className="text-center">
+                              <Col md="6" lg="6" sm="6" xs="12">
+                                <Button
+                                  type="button"
+                                  className="my-2"
+                                  onClick={() => editDetails(data)}
+                                >
                                   EDIT
                                 </Button>
                               </Col>
-                              <Col md="12" lg="6">
-                                <Button type="button" className="my-2" onClick={() => handleShowAlert(data._id)}>
+                              <Col md="6" lg="6" sm="6" xs="12">
+                                <Button
+                                  type="button"
+                                  className="my-2"
+                                  onClick={() => handleShowAlert(data._id)}
+                                >
                                   DELETE
                                 </Button>
                               </Col>
