@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable no-underscore-dangle */
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -89,6 +90,10 @@ function CrudUser() {
   useEffect(() => {
     dispatch(getEmployee([]));
   }, []);
+
+  useEffect(() => {
+    employees[0] === undefined ? setContainer(false) : setContainer(true);
+  }, [employees]);
 
   return (
     <Container className="userCrud">

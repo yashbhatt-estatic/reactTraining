@@ -40,23 +40,24 @@ function AxiosUserCrud() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const allUserData = () => {
+  const allUserData = async () => {
     axios
       .get(`${process.env.REACT_APP_BASE_URL}/users`)
       .then((res) => {
         dispatch(getEmployee(res.data.data));
         setUser(res.data.data);
         setCard(true);
-        setEmployee(employees);
       })
       .catch((err) => {
         alert(err.response.data.msg);
       });
+    await setEmployee(employees);
   };
 
-  const onUserChange = (event) => {
+  const onUserChange = async (event) => {
     if (event.target.value === 'all') {
       dispatch(getEmployeeById([]));
+      allUserData();
     } else {
       axios
         .get(`${process.env.REACT_APP_BASE_URL}/users/${event.target.value}`)
@@ -68,9 +69,8 @@ function AxiosUserCrud() {
         .catch((err) => {
           alert(err.response.data.msg);
         });
+      await employeeById !== [] ? setEmployee(employeeById) : setEmployee(employees);
     }
-
-    employeeById !== [] ? setEmployee(employeeById) : setEmployee(employees);
   };
 
   const formik = useFormik({
@@ -80,7 +80,7 @@ function AxiosUserCrud() {
       lastName: '',
       email: '',
       gender: 'male',
-      department: 'MERN',
+      department: '',
       city: '',
       state: '',
       country: '',
@@ -107,7 +107,7 @@ function AxiosUserCrud() {
             setUser(res.data.data);
             dispatch(addEmployee(res.data.data));
             setTimeout(() => {
-              onUserChange({ target: { value: res.data.data._id } });
+              onUserChange({ target: { value: 'all' } });
               handleClose();
               formik.resetForm();
             }, 3000);
@@ -121,7 +121,7 @@ function AxiosUserCrud() {
           .then((res) => {
             dispatch(editEmployee({ ...res.data.data }));
             setTimeout(() => {
-              onUserChange({ target: { value: res.data.data._id } });
+              onUserChange({ target: { value: 'all' } });
               handleClose();
               formik.resetForm();
             }, 3000);
@@ -181,16 +181,16 @@ function AxiosUserCrud() {
   };
 
   useEffect(() => {
-    allUserData();
+    onUserChange({ target: { value: 'all' } });
   }, []);
 
-  useEffect(() => {
-    employeeById !== [] ? setEmployee(employeeById) : setEmployee(employees);
-  }, [employees]);
-
-  useEffect(() => {
-    employeeById !== [] ? setEmployee(employeeById) : setEmployee(employees);
+  useEffect(async () => {
+    await employeeById !== [] ? setEmployee(employeeById) : setEmployee(employees);
   }, [employeeById]);
+
+  useEffect(async () => {
+    await setEmployee(employees);
+  }, [employees]);
 
   const addUser = () => {
     formik.resetForm();
@@ -198,31 +198,26 @@ function AxiosUserCrud() {
     handleShow();
   };
   return (
-    <Container className="userCrud px-5">
-      <header>
-        <h1 className="text-center mt-3">CRUD opeartions for Employee Module</h1>
-      </header>
-      <Container>
+    <>
+      <Container className="userCrud px-5">
+        <header>
+          <h1 className="text-center mt-3">CRUD opeartions for Employee Module</h1>
+        </header>
         <Container className="card mx-auto my-3 p-5 text-center">
           <Row>
-            <Col md="3" lg="4" sm="6">
+            <Col md="6" lg="6" sm="12">
               <Button className="my-2" variant="primary" onClick={addUser}>
                 Add User
               </Button>
             </Col>
-            <Col md="3" lg="4" sm="6">
-              <Button className="my-2" variant="primary" onClick={allUserData}>
-                Show All Users
-              </Button>
-            </Col>
-            <Col md="6" lg="4" sm="12">
+            <Col md="6" lg="6" sm="12">
               <select
                 className="my-2 form-select form-select-md"
                 id="id"
                 name="id"
                 onChange={onUserChange}
               >
-                <option value="all" defaultValue>
+                <option value="all" defaultChecked>
                   Select User
                 </option>
                 {employees.map((data) => (
@@ -239,10 +234,10 @@ function AxiosUserCrud() {
           <Modal.Body>Are you sure you want to delete!</Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" className="my-2" onClick={handleCloseAlert}>
-              Close
+              Cancel
             </Button>
             <Button variant="primary" className="my-2" onClick={handleDelete}>
-              Save Changes
+              Delete
             </Button>
           </Modal.Footer>
         </Modal>
@@ -310,6 +305,9 @@ function AxiosUserCrud() {
                       name="department"
                       onChange={formik.handleChange}
                     >
+                      <option value="" defaultChecked>
+                        Select Department
+                      </option>
                       <option value="MEAN">MEAN</option>
                       <option value="MERN">MERN</option>
                       <option value="Full-Stack">Full-Stack</option>
@@ -436,119 +434,119 @@ function AxiosUserCrud() {
             </Modal.Footer>
           </form>
         </Modal>
-
-        <div className="mt-5">
+      </Container>
+      <div className="mx-xl-5">
+        <div className="mt-5 mx-xl-5">
           {card
-            ? employee
-              && employee.map((data) => (
-                <Card className="my-4 mx-5 card">
-                  <Row>
-                    <Col>
-                      <Card.Body>
-                        <Card.Title className="text-dark text-center">User Details</Card.Title>
-                        <ListGroup className="list-group-flush">
-                          <ListGroupItem>
-                            <Row>
-                              <Col sm="6" md="3" lg="3" xs="6">
-                                First Name :-
-                                {' '}
-                              </Col>
-                              <Col sm="6" md="3" lg="3" xs="6">
-                                {data.firstName}
-                              </Col>
-                              <Col sm="6" md="4" lg="3" xs="6">
-                                Last Name :-
-                              </Col>
-                              <Col sm="6" md="2" lg="3" xs="6">
-                                {data.lastName}
-                              </Col>
-                            </Row>
-                          </ListGroupItem>
-                          <ListGroupItem>
-                            <Row>
-                              <Col sm="6" md="3" lg="3" xs="6">
-                                Email :-
-                                {' '}
-                              </Col>
-                              <Col sm="6" md="3" lg="3" xs="6">
-                                <span className="overflow w-50">
-                                  <span className="me-2">{data.email}</span>
-                                </span>
-                              </Col>
-                              <Col sm="6" md="4" lg="3" xs="6">
-                                Department :-
-                              </Col>
-                              <Col sm="6" md="2" lg="3" xs="6">
-                                {data.department}
-                              </Col>
-                            </Row>
-                          </ListGroupItem>
-                          <ListGroupItem>
-                            <Row>
-                              <Col sm="6" md="3" lg="3" xs="6">
-                                Gender :-
-                                {' '}
-                              </Col>
-                              <Col sm="6" md="3" lg="3" xs="6">
-                                {data.gender}
-                              </Col>
-                              <Col sm="6" md="2" lg="3" xs="6">
-                                City :-
-                              </Col>
-                              <Col sm="6" md="4" lg="3" xs="6">
-                                {data.city}
-                              </Col>
-                            </Row>
-                          </ListGroupItem>
-                          <ListGroupItem>
-                            <Row>
-                              <Col sm="6" md="3" lg="3" xs="6">
-                                State :-
-                                {' '}
-                              </Col>
-                              <Col sm="6" md="3" lg="3" xs="6">
-                                {data.state}
-                              </Col>
-                              <Col sm="6" md="4" lg="3" xs="6">
-                                Country :-
-                              </Col>
-                              <Col sm="6" md="2" lg="3" xs="6">
-                                {data.country}
-                              </Col>
-                            </Row>
-                          </ListGroupItem>
-                          <ListGroupItem>
-                            <Row className="text-center">
-                              <Col md="6" lg="6" sm="6" xs="12">
-                                <Button
-                                  type="button"
-                                  className="my-2"
-                                  onClick={() => editDetails(data)}
-                                >
-                                  EDIT
-                                </Button>
-                              </Col>
-                              <Col md="6" lg="6" sm="6" xs="12">
-                                <Button
-                                  type="button"
-                                  className="my-2"
-                                  onClick={() => handleShowAlert(data._id)}
-                                >
-                                  DELETE
-                                </Button>
-                              </Col>
-                            </Row>
-                          </ListGroupItem>
-                        </ListGroup>
-                      </Card.Body>
-                    </Col>
-                  </Row>
-                </Card>
-              ))
+            ? employee.map((data) => (
+              <Card className="my-lg-4 mx-xl-5 card">
+                <Row>
+                  <Col>
+                    <Card.Body>
+                      <Card.Title className="text-dark text-center">User Details</Card.Title>
+                      <ListGroup className="list-group-flush">
+                        <ListGroupItem>
+                          <Row>
+                            <Col sm="6" md="3" lg="3" xs="6">
+                              First Name :-
+                              {' '}
+                            </Col>
+                            <Col sm="6" md="3" lg="3" xs="6">
+                              {data.firstName}
+                            </Col>
+                            <Col sm="6" md="4" lg="3" xs="6">
+                              Last Name :-
+                            </Col>
+                            <Col sm="6" md="2" lg="3" xs="6">
+                              {data.lastName}
+                            </Col>
+                          </Row>
+                        </ListGroupItem>
+                        <ListGroupItem>
+                          <Row>
+                            <Col sm="6" md="3" lg="3" xs="6">
+                              Email :-
+                              {' '}
+                            </Col>
+                            <Col sm="6" md="3" lg="3" xs="6">
+                              <span className="overflow w-50">
+                                <span className="me-2">{data.email}</span>
+                              </span>
+                            </Col>
+                            <Col sm="6" md="4" lg="3" xs="6">
+                              Department :-
+                            </Col>
+                            <Col sm="6" md="2" lg="3" xs="6">
+                              {data.department}
+                            </Col>
+                          </Row>
+                        </ListGroupItem>
+                        <ListGroupItem>
+                          <Row>
+                            <Col sm="6" md="3" lg="3" xs="6">
+                              Gender :-
+                              {' '}
+                            </Col>
+                            <Col sm="6" md="3" lg="3" xs="6">
+                              {data.gender}
+                            </Col>
+                            <Col sm="6" md="2" lg="3" xs="6">
+                              City :-
+                            </Col>
+                            <Col sm="6" md="4" lg="3" xs="6">
+                              {data.city}
+                            </Col>
+                          </Row>
+                        </ListGroupItem>
+                        <ListGroupItem>
+                          <Row>
+                            <Col sm="6" md="3" lg="3" xs="6">
+                              State :-
+                              {' '}
+                            </Col>
+                            <Col sm="6" md="3" lg="3" xs="6">
+                              {data.state}
+                            </Col>
+                            <Col sm="6" md="4" lg="3" xs="6">
+                              Country :-
+                            </Col>
+                            <Col sm="6" md="2" lg="3" xs="6">
+                              {data.country}
+                            </Col>
+                          </Row>
+                        </ListGroupItem>
+                        <ListGroupItem>
+                          <Row className="text-center">
+                            <Col md="6" lg="6" sm="6" xs="12">
+                              <Button
+                                type="button"
+                                className="my-2"
+                                onClick={() => editDetails(data)}
+                              >
+                                EDIT
+                              </Button>
+                            </Col>
+                            <Col md="6" lg="6" sm="6" xs="12">
+                              <Button
+                                type="button"
+                                className="my-2"
+                                onClick={() => handleShowAlert(data._id)}
+                              >
+                                DELETE
+                              </Button>
+                            </Col>
+                          </Row>
+                        </ListGroupItem>
+                      </ListGroup>
+                    </Card.Body>
+                  </Col>
+                </Row>
+              </Card>
+            ))
             : null}
         </div>
-      </Container>
-    </Container>
+      </div>
+    </>
   );
 }
 
