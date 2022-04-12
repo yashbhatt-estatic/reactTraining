@@ -1,10 +1,18 @@
 import {
-  GET_EMPLOYEE, ADD_EMPLOYEE, EDIT_EMPLOYEE, DELETE_EMPLOYEE,
+  GET_EMPLOYEE, ADD_EMPLOYEE, EDIT_EMPLOYEE, DELETE_EMPLOYEE, GET_EMPLOYEE_BY_ID,
 } from '../actionTypes';
 
-export function getEmployee() {
+export function getEmployee(data) {
   return (dispatch) => dispatch({
     type: GET_EMPLOYEE,
+    payload: data,
+  });
+}
+
+export function getEmployeeById(data) {
+  return (dispatch) => dispatch({
+    type: GET_EMPLOYEE_BY_ID,
+    payload: data,
   });
 }
 
@@ -22,9 +30,9 @@ export function editEmployee(data) {
   });
 }
 
-export function deleteEmployee(employeeId) {
+export function deleteEmployee(data) {
   return (dispatch) => dispatch({
     type: DELETE_EMPLOYEE,
-    payload: employeeId,
+    payload: data,
   });
 }

@@ -1,18 +1,14 @@
-import {
-  AppBar, Container, Toolbar, Typography,
-} from '@mui/material';
+import { Container, Navbar, NavbarBrand } from 'react-bootstrap';
 
 function Footer() {
   return (
-    <AppBar position="static" className="bg-light text-dark">
-      <Container maxWidth="md">
-        <Toolbar className="justify-content-center">
-          <Typography variant="body1" color="inherit">
-            Copyright &copy; 2022
-          </Typography>
-        </Toolbar>
-      </Container>
-    </AppBar>
+    <div className="position-fixed left-0 right-0 bottom-0 w-100 bg-light">
+      <Navbar color="light">
+        <Container maxwidth="md" className="justify-content-center">
+          <NavbarBrand>Copyright &copy; 2022</NavbarBrand>
+        </Container>
+      </Navbar>
+    </div>
   );
 }
 

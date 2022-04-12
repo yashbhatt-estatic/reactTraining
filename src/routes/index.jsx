@@ -8,20 +8,22 @@ import SignupForm from '../pages/Form';
 import IpRouting from '../pages/InputRouting';
 import Layout from '../components/Layout';
 import CrudUser from '../pages/CRUD_User';
+import AxiosUserCrud from '../pages/Axios';
 
 function AppRoutes() {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<Width />} />
-        <Route path="/User" element={<User />} />
-        <Route path="/Counter" element={<Counter />} />
-        <Route path="/QueryParameter" element={<QueryParameter />}>
+        <Route path="/user" element={<User />} />
+        <Route path="/counter" element={<Counter />} />
+        <Route path="/queryParameter" element={<QueryParameter />}>
           <Route path=":users" element={<QueryParameter />} />
         </Route>
-        <Route path="/Form" element={<SignupForm />} />
-        <Route path="/IpRouting" element={<IpRouting />} />
-        <Route path="/UserCrud" element={<CrudUser />} />
+        <Route path="/form" element={<SignupForm />} />
+        <Route path="/ipRouting" element={<IpRouting />} />
+        <Route path="/userCrud" element={<CrudUser />} />
+        <Route path="/axiosUserCrud" element={<AxiosUserCrud />} />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>
