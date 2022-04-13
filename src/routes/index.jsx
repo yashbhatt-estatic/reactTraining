@@ -1,3 +1,4 @@
+import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Counter from '../pages/Counter';
 import NotFound from '../pages/NotFound';
