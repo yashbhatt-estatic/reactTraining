@@ -1,10 +1,13 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { HotModuleReplacementPlugin, NoEmitOnErrorsPlugin, ProvidePlugin } = require('webpack');
 
 module.exports = {
   entry: path.join(__dirname, 'src', 'index.js'),
   output: {
     path: path.resolve(__dirname, 'dist'),
+    publicPath: '/',
+    filename: 'bundle.js',
   },
   mode: 'development',
   plugins: [
@@ -14,7 +17,20 @@ module.exports = {
       favicon: './public/favicon.ico',
       manifest: './public/manifest.json',
     }),
+    new HotModuleReplacementPlugin(),
+    new NoEmitOnErrorsPlugin(),
+    new ProvidePlugin({
+      process: 'process/browser',
+    }),
   ],
+  devtool: 'inline-source-map',
+  devServer: {
+    static: './dist',
+    hot: true,
+    compress: true,
+    port: 3000,
+    historyApiFallback: true,
+  },
   module: {
     rules: [
       {
@@ -36,10 +52,6 @@ module.exports = {
         },
       },
       {
-        test: /\.(png|jp(e*)g|svg|gif)$/,
-        use: ['file-loader'],
-      },
-      {
         test: /\.jsx?$/,
         exclude: /node_modules/,
         use: {
@@ -52,13 +64,14 @@ module.exports = {
         },
       },
       {
-        test: /\.svg$/,
-        use: ['@svgr/webpack'],
-      },
-      {
-        test: /\.(png|svg|jpg|jpeg|gif|ico)$/,
-        exclude: /node_modules/,
-        use: ['file-loader?name=[name].[ext]'], // ?name=[name].[ext] is only necessary to preserve the original file name
+        test: /\.(svg|png|jpg|gif)$/,
+        use: {
+          loader: 'file-loader',
+          options: {
+            name: '[name].[hash].[ext]',
+            outputPath: 'imgs',
+          },
+        },
       },
     ],
   },
