@@ -22,7 +22,7 @@ export default function QueryParameter() {
   const [searchParams] = useSearchParams();
   const params = Object.fromEntries([...searchParams]);
   return (
-    <Container className="bg-light border mx-auto w-50 text-dark">
+    <Container className="border mx-auto w-50">
       <Table className="table">
         <TableHead>
           <TableRow>
@@ -47,7 +47,7 @@ export default function QueryParameter() {
       </Table>
 
       {params.sort ? (
-        <Card className="text-dark my-4 w-75 mx-auto">
+        <Card className="my-4 w-75 mx-auto">
           <Card.Body>
             <Card.Title>User Details</Card.Title>
             <ListGroup className="list-group-flush">

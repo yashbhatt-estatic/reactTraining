@@ -1,7 +1,10 @@
+import { Switch } from 'antd';
 import React from 'react';
 import { Container, Nav, Navbar } from 'react-bootstrap';
+import { useTheme } from '../../theme/use-theme';
 
 function Header() {
+  const [darkMode, setDarkMode] = useTheme();
   return (
     <Navbar bg="light" expand="lg" fixed="top">
       <Container>
@@ -18,6 +21,7 @@ function Header() {
             <Nav.Link className="text-dark" href="/axiosUserCrud">AxiosUserCRUD</Nav.Link>
           </Nav>
         </Navbar.Collapse>
+        <Switch checked={darkMode} onChange={setDarkMode} />
       </Container>
     </Navbar>
   );
