@@ -443,7 +443,7 @@ function AxiosUserCrud() {
                 <Row>
                   <Col>
                     <Card.Body>
-                      <Card.Title className="text-dark text-center">User Details</Card.Title>
+                      <Card.Title className="text-center">User Details</Card.Title>
                       <ListGroup className="list-group-flush">
                         <ListGroupItem>
                           <Row>

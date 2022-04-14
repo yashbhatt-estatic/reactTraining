@@ -2,6 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { HotModuleReplacementPlugin, NoEmitOnErrorsPlugin, ProvidePlugin } = require('webpack');
 const Dotenv = require('dotenv-webpack');
+const { getThemeVariables } = require('antd/dist/theme');
 
 module.exports = {
   entry: path.join(__dirname, 'src', 'index.js'),
@@ -72,6 +73,25 @@ module.exports = {
             outputPath: 'imgs',
           },
         },
+      },
+      {
+        test: /\.less$/,
+        use: [{
+          loader: 'style-loader',
+        }, {
+          loader: 'css-loader',
+        }, {
+          loader: 'less-loader',
+          options: {
+            lessOptions: {
+              modifyVars: getThemeVariables({
+                dark: true, // Enable dark mode
+                compact: true, // Enable compact mode
+              }),
+              javascriptEnabled: true,
+            },
+          },
+        }],
       },
     ],
   },

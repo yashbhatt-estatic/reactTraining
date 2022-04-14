@@ -10,7 +10,7 @@ function Layout() {
   return (
     <>
       <Header />
-      <div className="bg-dark text-white min-vh-100 pt-5 pb-5 w-100">
+      <div className="min-vh-100 pt-5 pb-5 w-100">
         <h1 className="text-center">Welcome to the page</h1>
         {loading ? <Loader /> : <Outlet />}
       </div>

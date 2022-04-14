@@ -39,7 +39,7 @@ function User() {
 
   return (
     <>
-      <Container className="bg-light border mx-auto w-50 my-5 text-dark">
+      <Container className="border mx-auto w-50 my-5">
         {detailsLoaded && (
           users.data.map((Obj) => (
             <Row md="2" className="justify-content-md-center border p-2" key={Obj.id} id={Obj.id}>

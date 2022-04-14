@@ -70,7 +70,7 @@ function SignupForm() {
   };
 
   return (
-    <Container className="bg-light border mx-auto w-50 p-4 text-dark text-start">
+    <Container className="border mx-auto w-50 p-4 text-start">
       <Form onSubmit={formik.handleSubmit}>
         <Row className="mb-3">
           <Form.Group as={Col} md="4" lg="4" sm="12">

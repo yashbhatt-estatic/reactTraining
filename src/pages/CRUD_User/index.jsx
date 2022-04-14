@@ -96,7 +96,7 @@ function CrudUser() {
   }, [employees]);
 
   return (
-    <Container className="userCrud">
+    <Container className="userCrud text-dark">
       <header>
         <h1 className="text-center mt-3">CRUD opeartions for Employee Module</h1>
       </header>

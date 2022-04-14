@@ -25,7 +25,7 @@ function Counter() {
   });
 
   return (
-    <Container className="p-2 mb-3 text-center text-white">
+    <Container className="p-2 mb-3 text-center">
       <h3>
         Counter :
         {' '}
