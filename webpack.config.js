@@ -11,13 +11,12 @@ module.exports = {
     publicPath: '/',
     filename: 'bundle.js',
   },
-  mode: 'development',
+  mode: 'production',
   plugins: [
     new HtmlWebpackPlugin({
       template: './public/index.html',
       filename: './index.html',
-      favicon: './public/favicon.ico',
-      manifest: './public/manifest.json',
+      favicon: './src/components/Layout/Header/assets/theOne.png',
     }),
     new HotModuleReplacementPlugin(),
     new NoEmitOnErrorsPlugin(),
@@ -31,6 +30,11 @@ module.exports = {
     hot: true,
     compress: true,
     historyApiFallback: true,
+  },
+  performance: {
+    hints: false,
+    maxEntrypointSize: 512000,
+    maxAssetSize: 512000,
   },
   module: {
     rules: [
@@ -60,12 +64,12 @@ module.exports = {
           options: {
             cacheDirectory: true,
             cacheCompression: false,
-            envName: 'development',
+            envName: 'production',
           },
         },
       },
       {
-        test: /\.(svg|png|jpg|gif)$/,
+        test: /\.(svg|png|jpg|gif|ico)$/,
         use: {
           loader: 'file-loader',
           options: {
@@ -92,6 +96,13 @@ module.exports = {
             },
           },
         }],
+      },
+      {
+        test: /\.json$/,
+        exclude: /node_modules/,
+        use: [
+          'file-loader?name=[name].[ext]&outputPath=portal/content/json',
+        ],
       },
     ],
   },

@@ -37,8 +37,8 @@
     ]
   },
   "scripts": {
-    "dev": "webpack serve --mode development --config webpack.config.js",
-    "build": "webpack",
+    "dev": "webpack serve --mode production --config webpack.config.js",
+    "build": "webpack --mode production",
     "start": "react-scripts start",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
@@ -81,6 +81,8 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.29.4",
     "eslint-plugin-react-hooks": "^4.3.0",
+    "favicons": "^6.2.2",
+    "favicons-webpack-plugin": "^5.0.2",
     "html-webpack-plugin": "^5.5.0",
     "prettier": "^2.5.1",
     "pretty-quick": "^3.1.3",

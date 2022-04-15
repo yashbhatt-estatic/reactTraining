@@ -49,7 +49,7 @@ export default function QueryParameter() {
       {params.sort ? (
         <Card className="my-4 w-75 mx-auto">
           <Card.Body>
-            <Card.Title>User Details</Card.Title>
+            <Card.Title className="text-dark">User Details:-</Card.Title>
             <ListGroup className="list-group-flush">
               <ListGroupItem>
                 <Row>

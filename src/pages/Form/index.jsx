@@ -225,7 +225,7 @@ function SignupForm() {
           <Row>
             <Col>
               <Card.Body>
-                <Card.Title>User</Card.Title>
+                <Card.Title className="text-dark">User:-</Card.Title>
                 <ListGroup className="list-group-flush">
                   <ListGroupItem>
                     <Row>
