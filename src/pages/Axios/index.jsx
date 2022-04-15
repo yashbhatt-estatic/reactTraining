@@ -249,7 +249,7 @@ function AxiosUserCrud() {
           onHide={handleClose}
         >
           <Modal.Header closeButton>
-            <Modal.Title>Enter User Details :- </Modal.Title>
+            <Modal.Title className="text-dark">Enter User Details :- </Modal.Title>
           </Modal.Header>
           <form onSubmit={formik.handleSubmit} className="form">
             <Modal.Body>
